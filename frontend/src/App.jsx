@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Sidebar from "./components/Sidebar";
+import TopBar from "./components/TopBar";
 import Dashboard from "./components/Dashboard";
 import TaskBoard from "./components/TaskBoard";
 import Team from "./components/Team";
@@ -27,6 +28,7 @@ function App() {
   return (
     <div className="app">
       <Sidebar activePage={activePage} setActivePage={setActivePage} />
+      <TopBar />
       <main className="main-content">{renderPage()}</main>
     </div>
   );
