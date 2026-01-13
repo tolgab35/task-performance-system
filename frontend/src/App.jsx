@@ -1,39 +1,33 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import Dashboard from "./components/Dashboard";
+import TaskBoard from "./components/TaskBoard";
+import Team from "./components/Team";
+import Reports from "./components/Reports";
+import "./App.css";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [activePage, setActivePage] = useState("tasks");
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/tasks")
-      .then((res) => res.json())
-      .then((data) => {
-        setTasks(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("API error:", err);
-        setLoading(false);
-      });
-  }, []);
+  const renderPage = () => {
+    switch (activePage) {
+      case "dashboard":
+        return <Dashboard />;
+      case "tasks":
+        return <TaskBoard />;
+      case "team":
+        return <Team />;
+      case "reports":
+        return <Reports />;
+      default:
+        return <TaskBoard />;
+    }
+  };
 
   return (
-    <div>
-      <h1>Task Performance System</h1>
-
-      {loading ? (
-        <p>Loading tasks...</p>
-      ) : (
-        <div>
-          {tasks.map((task) => (
-            <p key={task.id}>
-              <strong>ID:</strong> {task.id} <br />
-              <strong>Task:</strong> {task.title} <br />
-              <strong>Status:</strong> {task.status}
-            </p>
-          ))}
-        </div>
-      )}
+    <div className="app">
+      <Sidebar activePage={activePage} setActivePage={setActivePage} />
+      <main className="main-content">{renderPage()}</main>
     </div>
   );
 }
