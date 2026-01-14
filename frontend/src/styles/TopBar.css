@@ -49,6 +49,19 @@
   color: white;
 }
 
+.project-tab.create-project-btn {
+  background: transparent;
+  border: 1px dashed #d1d5db;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.project-tab.create-project-btn:hover {
+  background: #f9fafb;
+  border-color: #667eea;
+  color: #667eea;
+}
+
 .search-container {
   position: relative;
   display: flex;

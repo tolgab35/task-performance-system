@@ -1,24 +1,32 @@
 import "../styles/TopBar.css";
 
 const TopBar = ({ userProjects = [], activeProject, onProjectChange }) => {
+  const handleCreateProject = () => {
+    console.log("create project");
+  };
+
   return (
     <div className="topbar">
       <div className="topbar-left">
-        {userProjects.length > 0 && (
-          <div className="project-tabs">
-            {userProjects.map((project) => (
-              <button
-                key={project._id}
-                className={`project-tab ${
-                  activeProject?._id === project._id ? "active" : ""
-                }`}
-                onClick={() => onProjectChange(project)}
-              >
-                {project.name}
-              </button>
-            ))}
-          </div>
-        )}
+        <div className="project-tabs">
+          {userProjects.map((project) => (
+            <button
+              key={project._id}
+              className={`project-tab ${
+                activeProject?._id === project._id ? "active" : ""
+              }`}
+              onClick={() => onProjectChange(project)}
+            >
+              {project.name}
+            </button>
+          ))}
+          <button 
+            className="project-tab create-project-btn" 
+            onClick={handleCreateProject}
+          >
+            + Proje Oluştur
+          </button>
+        </div>
 
         <div className="search-container">
           <span className="search-icon">🔍</span>
