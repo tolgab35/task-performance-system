@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import "../styles/Sidebar.css";
 
 const Sidebar = () => {
@@ -16,7 +16,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
   return (
@@ -32,7 +32,9 @@ const Sidebar = () => {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            className={`nav-item ${location.pathname === item.path ? "active" : ""}`}
+            className={`nav-item ${
+              location.pathname === item.path ? "active" : ""
+            }`}
             onClick={() => navigate(item.path)}
           >
             <span className="nav-icon">{item.icon}</span>
@@ -43,7 +45,9 @@ const Sidebar = () => {
 
       <div className="sidebar-footer">
         <div className="user-profile">
-          <div className="user-avatar">{user?.name?.substring(0, 2).toUpperCase() || "U"}</div>
+          <div className="user-avatar">
+            {user?.name?.substring(0, 2).toUpperCase() || "U"}
+          </div>
           <div className="user-info">
             <div className="user-name">{user?.name || "User"}</div>
             <div className="user-email">{user?.email || ""}</div>
