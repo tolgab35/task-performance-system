@@ -10,7 +10,7 @@ const ProjectCreateModal = ({ isOpen, onClose, onProjectCreated }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!name.trim()) {
       setError("Proje adı zorunludur");
       return;
@@ -48,8 +48,8 @@ const ProjectCreateModal = ({ isOpen, onClose, onProjectCreated }) => {
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h2>Yeni Proje Oluştur</h2>
-          <button 
-            className="modal-close" 
+          <button
+            className="modal-close"
             onClick={handleClose}
             disabled={loading}
           >
@@ -81,9 +81,7 @@ const ProjectCreateModal = ({ isOpen, onClose, onProjectCreated }) => {
             />
           </div>
 
-          {error && (
-            <div className="error-message">{error}</div>
-          )}
+          {error && <div className="error-message">{error}</div>}
 
           <div className="modal-actions">
             <button
@@ -94,11 +92,7 @@ const ProjectCreateModal = ({ isOpen, onClose, onProjectCreated }) => {
             >
               İptal
             </button>
-            <button
-              type="submit"
-              className="btn-primary"
-              disabled={loading}
-            >
+            <button type="submit" className="btn-primary" disabled={loading}>
               {loading ? "Oluşturuluyor..." : "Oluştur"}
             </button>
           </div>
