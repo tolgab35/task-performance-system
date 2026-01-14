@@ -22,6 +22,18 @@ const taskSchema = new mongoose.Schema(
       enum: ["To Do", "In Progress", "Done"],
       default: "To Do",
     },
+    // Task aciliyeti
+    priority: {
+      type: String,
+      enum: ["Low", "Medium", "High"],
+      default: "Medium",
+    },
+    // Task kategorisi/türü
+    category: {
+      type: String,
+      enum: ["Ideation", "Design", "Research", "Development"],
+      default: "Development",
+    },
     // Task'in ait olduğu proje
     projectId: {
       type: mongoose.Schema.Types.ObjectId,
