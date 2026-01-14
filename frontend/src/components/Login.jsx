@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { CheckCircle } from "lucide-react";
 import { useAuth } from "../context/useAuth";
 import "../styles/Login.css";
 
@@ -20,44 +21,71 @@ function Login() {
       await login(email, password);
       navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      setError(err.response?.data?.message || "Giriş başarısız oldu");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-box">
-        <h1>Giriş Yap</h1>
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label>E-posta</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              disabled={loading}
-            />
+    <div className="auth-page">
+      <div className="auth-container">
+        <Link to="/" className="auth-logo">
+          <CheckCircle size={32} className="logo-icon" />
+          <span>TaskFlow</span>
+        </Link>
+        
+        <div className="auth-box">
+          <div className="auth-header">
+            <h1>Tekrar Hoş Geldiniz</h1>
+            <p>Hesabınıza giriş yapın</p>
           </div>
-          <div className="form-group">
-            <label>Şifre</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              disabled={loading}
-            />
+          
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label htmlFor="email">E-posta</label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="ornek@sirket.com"
+                required
+                disabled={loading}
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="password">Şifre</label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Şifrenizi girin"
+                required
+                disabled={loading}
+              />
+            </div>
+            
+            {error && <div className="error-message">{error}</div>}
+            
+            <button type="submit" className="auth-submit" disabled={loading}>
+              {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
+            </button>
+          </form>
+          
+          <div className="auth-divider">
+            <span>veya</span>
           </div>
-          {error && <div className="error-message">{error}</div>}
-          <button type="submit" disabled={loading}>
-            {loading ? "Yükleniyor..." : "Giriş Yap"}
-          </button>
-        </form>
-        <p className="auth-link">
-          Hesabınız yok mu? <Link to="/register">Kayıt Olun</Link>
+          
+          <p className="auth-link">
+            Hesabınız yok mu? <Link to="/register">Hemen kayıt olun</Link>
+          </p>
+        </div>
+        
+        <p className="auth-footer">
+          <Link to="/">Ana sayfaya dön</Link>
         </p>
       </div>
     </div>
