@@ -40,7 +40,7 @@ exports.getAllTasks = async (req, res) => {
  */
 exports.createTask = async (req, res) => {
   try {
-    const { title, description, projectId, assignedUser } = req.body;
+    const { title, description, projectId, assignedUser, priority, category } = req.body;
 
     // Proje kontrolü
     const project = await Project.findById(projectId);
@@ -76,6 +76,8 @@ exports.createTask = async (req, res) => {
       description,
       projectId,
       assignedUser,
+      priority,
+      category,
     });
 
     await task.save();
