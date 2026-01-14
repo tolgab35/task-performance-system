@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { teamService } from "../services/teamService";
+import { useAuth } from "../context/useAuth";
 import InvitationModal from "./InvitationModal";
 import "../styles/Team.css";
 
 const Team = ({ activeProject }) => {
+  const { user } = useAuth();
   const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -85,6 +87,8 @@ const Team = ({ activeProject }) => {
     );
   }
 
+  const isProjectLeader = activeProject?.createdBy?._id === user?._id;
+
   return (
     <div className="team-page">
       <div className="team-header">
@@ -92,12 +96,14 @@ const Team = ({ activeProject }) => {
           <h1>Takım</h1>
           <p className="subtitle">Takım üyelerini görüntüleyin ve yönetin</p>
         </div>
-        <button
-          className="btn-primary"
-          onClick={() => setIsInviteModalOpen(true)}
-        >
-          + Üye Ekle
-        </button>
+        {isProjectLeader && (
+          <button
+            className="btn-primary"
+            onClick={() => setIsInviteModalOpen(true)}
+          >
+            + Üye Ekle
+          </button>
+        )}
       </div>
 
       {teamMembers.length === 0 ? (
@@ -133,12 +139,14 @@ const Team = ({ activeProject }) => {
         </div>
       )}
 
-      <InvitationModal
-        isOpen={isInviteModalOpen}
-        onClose={() => setIsInviteModalOpen(false)}
-        projectId={activeProject._id}
-        onInvitationSent={handleInvitationSent}
-      />
+      {isProjectLeader && (
+        <InvitationModal
+          isOpen={isInviteModalOpen}
+          onClose={() => setIsInviteModalOpen(false)}
+          projectId={activeProject._id}
+          onInvitationSent={handleInvitationSent}
+        />
+      )}
     </div>
   );
 };
