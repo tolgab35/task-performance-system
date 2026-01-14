@@ -90,7 +90,10 @@ function MainLayout() {
               path="/dashboard"
               element={<Dashboard activeProject={activeProject} />}
             />
-            <Route path="/tasks" element={<TaskBoard />} />
+            <Route
+              path="/tasks"
+              element={<TaskBoard activeProject={activeProject} />}
+            />
             <Route
               path="/team"
               element={<Team activeProject={activeProject} />}
