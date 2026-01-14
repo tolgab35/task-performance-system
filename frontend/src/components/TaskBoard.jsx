@@ -3,9 +3,11 @@ import { Plus } from "lucide-react";
 import TaskCard from "./TaskCard";
 import TaskCreateModal from "./TaskCreateModal";
 import { taskService } from "../services/taskService";
+import { useAuth } from "../context/useAuth";
 import "../styles/TaskBoard.css";
 
-const TaskBoard = ({ activeProject }) => {
+const TaskBoard = ({ activeProject, onInviteClick }) => {
+  const { user } = useAuth();
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -122,8 +124,15 @@ const TaskBoard = ({ activeProject }) => {
             <div className="avatar avatar-3">MK</div>
             <div className="avatar avatar-4">+5</div>
           </div>
-          <button className="btn-secondary">Invite</button>
-          <button className="btn-primary" onClick={() => handleAddTask("To Do")}>
+          {user && activeProject.createdBy === user.id && (
+            <button className="btn-secondary" onClick={onInviteClick}>
+              Invite
+            </button>
+          )}
+          <button
+            className="btn-primary"
+            onClick={() => handleAddTask("To Do")}
+          >
             <Plus size={16} />
             <span>Add New Task</span>
           </button>

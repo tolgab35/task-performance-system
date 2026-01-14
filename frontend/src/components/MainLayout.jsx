@@ -8,12 +8,14 @@ import Dashboard from "./Dashboard";
 import TaskBoard from "./TaskBoard";
 import Team from "./Team";
 import Reports from "./Reports";
+import InvitationModal from "./InvitationModal";
 
 function MainLayout() {
   const [activeProject, setActiveProject] = useState(null);
   const [userProjects, setUserProjects] = useState([]);
   const [invitations, setInvitations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchUserProjects = async () => {
@@ -92,7 +94,12 @@ function MainLayout() {
             />
             <Route
               path="/tasks"
-              element={<TaskBoard activeProject={activeProject} />}
+              element={
+                <TaskBoard
+                  activeProject={activeProject}
+                  onInviteClick={() => setIsInvitationModalOpen(true)}
+                />
+              }
             />
             <Route
               path="/team"
@@ -103,6 +110,14 @@ function MainLayout() {
           </Routes>
         )}
       </main>
+
+      {activeProject && (
+        <InvitationModal
+          isOpen={isInvitationModalOpen}
+          onClose={() => setIsInvitationModalOpen(false)}
+          projectId={activeProject._id}
+        />
+      )}
     </div>
   );
 }
