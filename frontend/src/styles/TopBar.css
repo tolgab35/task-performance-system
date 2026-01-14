@@ -121,6 +121,10 @@
   gap: 16px;
 }
 
+.notification-container {
+  position: relative;
+}
+
 .topbar-icon,
 .topbar-profile {
   background: none;
