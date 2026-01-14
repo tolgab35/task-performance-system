@@ -124,7 +124,9 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
             <div className="avatar avatar-3">MK</div>
             <div className="avatar avatar-4">+5</div>
           </div>
-          {user && activeProject.createdBy === user.id && (
+          {user && activeProject.createdBy && 
+           (activeProject.createdBy === user._id || 
+            activeProject.createdBy._id === user._id) && (
             <button className="btn-secondary" onClick={onInviteClick}>
               Davet Et
             </button>
