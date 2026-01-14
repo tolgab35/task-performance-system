@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { teamService } from "../services/teamService";
+import InvitationModal from "./InvitationModal";
 import "../styles/Team.css";
 
 const Team = ({ activeProject }) => {
   const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
@@ -28,6 +30,10 @@ const Team = ({ activeProject }) => {
 
     fetchTeamMembers();
   }, [activeProject]);
+
+  const handleInvitationSent = () => {
+    // Optionally refresh team members or show success message
+  };
 
   const getInitials = (name) => {
     if (!name) return "?";
@@ -70,7 +76,9 @@ const Team = ({ activeProject }) => {
         <div className="team-header">
           <div>
             <h1>Takım</h1>
-            <p className="subtitle" style={{ color: "#ef4444" }}>{error}</p>
+            <p className="subtitle" style={{ color: "#ef4444" }}>
+              {error}
+            </p>
           </div>
         </div>
       </div>
@@ -84,7 +92,12 @@ const Team = ({ activeProject }) => {
           <h1>Takım</h1>
           <p className="subtitle">Takım üyelerini görüntüleyin ve yönetin</p>
         </div>
-        <button className="btn-primary">+ Üye Ekle</button>
+        <button
+          className="btn-primary"
+          onClick={() => setIsInviteModalOpen(true)}
+        >
+          + Üye Ekle
+        </button>
       </div>
 
       {teamMembers.length === 0 ? (
@@ -98,7 +111,9 @@ const Team = ({ activeProject }) => {
               <div className="member-status">
                 <span className="status-indicator online"></span>
               </div>
-              <div className="member-avatar-large">{getInitials(member.name)}</div>
+              <div className="member-avatar-large">
+                {getInitials(member.name)}
+              </div>
               <h3 className="member-name">{member.name}</h3>
               <p className="member-email">{member.email}</p>
 
@@ -117,6 +132,13 @@ const Team = ({ activeProject }) => {
           ))}
         </div>
       )}
+
+      <InvitationModal
+        isOpen={isInviteModalOpen}
+        onClose={() => setIsInviteModalOpen(false)}
+        projectId={activeProject._id}
+        onInvitationSent={handleInvitationSent}
+      />
     </div>
   );
 };
