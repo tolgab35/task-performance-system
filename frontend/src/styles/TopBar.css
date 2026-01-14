@@ -3,13 +3,13 @@
   top: 0;
   right: 0;
   left: 260px;
-  height: 64px;
+  height: 56px;
   background: white;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #DFE1E6;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 32px;
+  padding: 0 24px;
   z-index: 100;
 }
 
@@ -29,65 +29,67 @@
 .project-tab {
   padding: 6px 12px;
   border: none;
-  background: #f3f4f6;
-  color: #6b7280;
-  border-radius: 6px;
+  background: #F4F5F7;
+  color: #5E6C84;
+  border-radius: 3px;
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .project-tab:hover {
-  background: #e5e7eb;
-  color: #111827;
+  background: #EBECF0;
+  color: #172B4D;
 }
 
 .project-tab.active {
-  background: #667eea;
+  background: #0052CC;
   color: white;
 }
 
 .project-tab.create-project-btn {
   background: transparent;
-  border: 1px dashed #d1d5db;
-  color: #9ca3af;
-  font-size: 12px;
+  border: 1px solid #DFE1E6;
+  color: #5E6C84;
+  font-size: 13px;
 }
 
 .project-tab.create-project-btn:hover {
-  background: #f9fafb;
-  border-color: #667eea;
-  color: #667eea;
+  background: #F4F5F7;
+  border-color: #C1C7D0;
+  color: #172B4D;
 }
 
 .search-container {
   position: relative;
   display: flex;
   align-items: center;
-  background: #f3f4f6;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 0 12px;
-  transition: all 0.2s ease;
+  background: #FAFBFC;
+  border: 1px solid #DFE1E6;
+  border-radius: 3px;
+  padding: 0 8px;
+  transition: all 0.1s ease;
 }
 
 .search-container:hover {
-  border-color: #d1d5db;
+  border-color: #C1C7D0;
   background: #fff;
 }
 
 .search-container:focus-within {
-  border-color: #667eea;
+  border-color: #4C9AFF;
   background: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 0 1px #4C9AFF;
 }
 
 .search-icon {
-  font-size: 16px;
-  color: #9ca3af;
-  margin-right: 8px;
+  color: #5E6C84;
+  margin-right: 6px;
 }
 
 .search-input {
@@ -95,30 +97,30 @@
   background: none;
   border: none;
   outline: none;
-  font-size: 14px;
-  color: #111827;
-  padding: 8px 0;
+  font-size: 13px;
+  color: #172B4D;
+  padding: 6px 0;
   min-width: 0;
 }
 
 .search-input::placeholder {
-  color: #9ca3af;
+  color: #8993A4;
 }
 
 .search-shortcut {
   font-size: 11px;
-  color: #9ca3af;
-  background: #e5e7eb;
-  padding: 2px 6px;
-  border-radius: 4px;
-  margin-left: 8px;
+  color: #5E6C84;
+  background: #DFE1E6;
+  padding: 2px 5px;
+  border-radius: 2px;
+  margin-left: 6px;
   font-weight: 500;
 }
 
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .notification-container {
@@ -130,21 +132,18 @@
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: all 0.2s ease;
+  padding: 6px;
+  border-radius: 3px;
+  transition: all 0.1s ease;
   position: relative;
-}
-
-.topbar-icon:hover {
-  background: #f3f4f6;
-}
-
-.topbar-icon {
-  font-size: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #42526E;
+}
+
+.topbar-icon:hover {
+  background: #F4F5F7;
 }
 
 .notification-btn {
@@ -172,7 +171,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #6554C0;
   display: flex;
   align-items: center;
   justify-content: center;

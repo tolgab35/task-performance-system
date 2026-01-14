@@ -1,6 +1,6 @@
 .reports-page {
-  padding: 32px;
-  background: #f9fafb;
+  padding: 24px;
+  background: #FAFBFC;
   min-height: 100vh;
 }
 
@@ -8,184 +8,228 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .reports-header h1 {
-  font-size: 32px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #172B4D;
+  margin: 0 0 4px 0;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #5E6C84;
+  margin: 0;
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: #0052CC;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+.btn-primary:hover {
+  background: #0747A6;
 }
 
 .report-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .report-card {
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 24px;
-  transition: all 0.2s ease;
+  border: 1px solid #DFE1E6;
+  border-radius: 3px;
+  padding: 20px;
+  transition: all 0.1s ease;
 }
 
 .report-card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);
+  box-shadow: 0 1px 2px rgba(9, 30, 66, 0.25);
 }
 
 .report-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
+}
+
+.report-icon-blue {
+  background: #DEEBFF;
+  color: #0052CC;
+}
+
+.report-icon-orange {
+  background: #FFF0B3;
+  color: #FF991F;
+}
+
+.report-icon-green {
+  background: #E3FCEF;
+  color: #00875A;
+}
+
+.report-icon-red {
+  background: #FFEBE6;
+  color: #DE350B;
 }
 
 .report-card h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #172B4D;
+  margin: 0 0 6px 0;
 }
 
 .report-description {
-  font-size: 14px;
-  color: #6b7280;
-  line-height: 1.6;
-  margin: 0 0 16px 0;
+  font-size: 13px;
+  color: #5E6C84;
+  line-height: 1.5;
+  margin: 0 0 12px 0;
 }
 
 .report-metric {
   display: flex;
   align-items: baseline;
-  gap: 8px;
+  gap: 6px;
 }
 
 .metric-value {
-  font-size: 24px;
-  font-weight: 700;
-  color: #111827;
+  font-size: 20px;
+  font-weight: 600;
+  color: #172B4D;
 }
 
 .metric-label {
-  font-size: 14px;
-  color: #6b7280;
+  font-size: 13px;
+  color: #5E6C84;
 }
 
 .report-details {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 24px;
+  gap: 16px;
 }
 
 .detail-section {
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 24px;
+  border: 1px solid #DFE1E6;
+  border-radius: 3px;
+  padding: 20px;
 }
 
 .detail-section h2 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 20px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #172B4D;
+  margin: 0 0 16px 0;
 }
 
 .performance-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .performance-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .perf-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
 }
 
 .perf-avatar {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #6554C0;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
   flex-shrink: 0;
 }
 
 .perf-name {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
-  color: #111827;
+  color: #172B4D;
   margin: 0;
 }
 
 .perf-role {
-  font-size: 13px;
-  color: #6b7280;
-  margin: 4px 0 0 0;
+  font-size: 12px;
+  color: #5E6C84;
+  margin: 2px 0 0 0;
 }
 
 .perf-stats {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 8px;
-  min-width: 150px;
+  gap: 6px;
+  min-width: 140px;
 }
 
 .perf-tasks {
-  font-size: 13px;
-  color: #6b7280;
+  font-size: 12px;
+  color: #5E6C84;
   font-weight: 500;
 }
 
 .perf-bar {
-  width: 150px;
-  height: 8px;
-  background: #f3f4f6;
-  border-radius: 4px;
+  width: 140px;
+  height: 6px;
+  background: #F4F5F7;
+  border-radius: 3px;
   overflow: hidden;
 }
 
 .perf-fill {
   height: 100%;
-  border-radius: 4px;
-  transition: width 0.3s ease;
+  border-radius: 3px;
+  transition: width 0.2s ease;
 }
 
 .stats-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .stats-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #f3f4f6;
+  padding: 10px 0;
+  border-bottom: 1px solid #F4F5F7;
 }
 
 .stats-item:last-child {
@@ -193,14 +237,14 @@
 }
 
 .stats-label {
-  font-size: 14px;
-  color: #6b7280;
+  font-size: 13px;
+  color: #5E6C84;
 }
 
 .stats-value {
-  font-size: 16px;
-  font-weight: 700;
-  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+  color: #172B4D;
 }
 
 @media (max-width: 1024px) {

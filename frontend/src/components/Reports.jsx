@@ -1,3 +1,4 @@
+import { BarChart3, Clock, CheckCircle, Target } from "lucide-react";
 import "../styles/Reports.css";
 
 const Reports = () => {
@@ -10,13 +11,16 @@ const Reports = () => {
             Proje performansını ve metrikleri görüntüleyin
           </p>
         </div>
-        <button className="btn-primary">📊 Rapor Oluştur</button>
+        <button className="btn-primary">
+          <BarChart3 size={16} />
+          <span>Rapor Oluştur</span>
+        </button>
       </div>
 
       <div className="report-cards">
         <div className="report-card">
-          <div className="report-icon" style={{ background: "#eef2ff" }}>
-            <span style={{ fontSize: "32px" }}>📈</span>
+          <div className="report-icon report-icon-blue">
+            <BarChart3 size={24} />
           </div>
           <h3>Haftalık Performans</h3>
           <p className="report-description">
@@ -29,8 +33,8 @@ const Reports = () => {
         </div>
 
         <div className="report-card">
-          <div className="report-icon" style={{ background: "#fef3c7" }}>
-            <span style={{ fontSize: "32px" }}>⏱️</span>
+          <div className="report-icon report-icon-orange">
+            <Clock size={24} />
           </div>
           <h3>Zaman Takibi</h3>
           <p className="report-description">
@@ -43,8 +47,8 @@ const Reports = () => {
         </div>
 
         <div className="report-card">
-          <div className="report-icon" style={{ background: "#d1fae5" }}>
-            <span style={{ fontSize: "32px" }}>✅</span>
+          <div className="report-icon report-icon-green">
+            <CheckCircle size={24} />
           </div>
           <h3>Tamamlanma Oranı</h3>
           <p className="report-description">
@@ -57,8 +61,8 @@ const Reports = () => {
         </div>
 
         <div className="report-card">
-          <div className="report-icon" style={{ background: "#fee2e2" }}>
-            <span style={{ fontSize: "32px" }}>🎯</span>
+          <div className="report-icon report-icon-red">
+            <Target size={24} />
           </div>
           <h3>Proje Hedefleri</h3>
           <p className="report-description">

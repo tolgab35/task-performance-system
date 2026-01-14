@@ -1,6 +1,6 @@
 .dashboard {
   padding: 32px;
-  background: #f9fafb;
+  background: #fafbfc;
   min-height: 100vh;
 }
 
@@ -9,49 +9,69 @@
 }
 
 .dashboard-header h1 {
-  font-size: 32px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #172B4D;
+  margin: 0 0 4px 0;
 }
 
 .subtitle {
-  font-size: 16px;
-  color: #6b7280;
+  font-size: 14px;
+  color: #5E6C84;
   margin: 0;
+  font-weight: 400;
 }
 
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
 .stat-card {
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 24px;
+  border: 1px solid #DFE1E6;
+  border-radius: 3px;
+  padding: 20px;
   display: flex;
   align-items: center;
   gap: 16px;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .stat-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
+  box-shadow: 0 1px 3px rgba(23, 43, 77, 0.1);
+  border-color: #C1C7D0;
 }
 
 .stat-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+}
+
+.stat-icon-blue {
+  background: #DEEBFF;
+  color: #0052CC;
+}
+
+.stat-icon-orange {
+  background: #FFF0B3;
+  color: #FF991F;
+}
+
+.stat-icon-green {
+  background: #E3FCEF;
+  color: #00875A;
+}
+
+.stat-icon-purple {
+  background: #EAE6FF;
+  color: #5243AA;
 }
 
 .stat-content {
@@ -59,51 +79,55 @@
 }
 
 .stat-value {
-  font-size: 32px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 4px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #172B4D;
+  margin: 0 0 2px 0;
+  line-height: 1;
 }
 
 .stat-label {
-  font-size: 14px;
-  color: #6b7280;
+  font-size: 12px;
+  color: #5E6C84;
   margin: 0;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .dashboard-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
+  gap: 16px;
 }
 
 .recent-activity,
 .project-progress {
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 24px;
+  border: 1px solid #DFE1E6;
+  border-radius: 3px;
+  padding: 20px;
 }
 
 .recent-activity h2,
 .project-progress h2 {
-  font-size: 18px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 20px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #172B4D;
+  margin: 0 0 16px 0;
 }
 
 .activity-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 }
 
 .activity-item {
   display: flex;
   gap: 12px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #F4F5F7;
 }
 
 .activity-item:last-child {
@@ -112,15 +136,15 @@
 }
 
 .activity-avatar {
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #6554C0;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   flex-shrink: 0;
 }
@@ -131,18 +155,22 @@
 
 .activity-details p {
   font-size: 14px;
-  color: #374151;
+  color: #172B4D;
   margin: 0 0 4px 0;
-  line-height: 1.5;
+  line-height: 1.4;
+}
+
+.activity-details strong {
+  font-weight: 500;
 }
 
 .activity-time {
   font-size: 12px;
-  color: #9ca3af;
+  color: #6B778C;
 }
 
 .progress-item {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .progress-item:last-child {
@@ -152,22 +180,22 @@
 .progress-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  color: #374151;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #172B4D;
 }
 
 .progress-bar {
-  height: 8px;
-  background: #f3f4f6;
-  border-radius: 4px;
+  height: 6px;
+  background: #F4F5F7;
+  border-radius: 3px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  border-radius: 4px;
+  border-radius: 3px;
   transition: width 0.3s ease;
 }
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Plus, Search, Bell } from "lucide-react";
 import ProjectCreateModal from "./ProjectCreateModal";
 import NotificationPanel from "./NotificationPanel";
 import "../styles/TopBar.css";
@@ -44,12 +45,13 @@ const TopBar = ({
               className="project-tab create-project-btn"
               onClick={handleCreateProject}
             >
-              + Proje Oluştur
+              <Plus size={16} />
+              <span>Proje Oluştur</span>
             </button>
           </div>
 
           <div className="search-container">
-            <span className="search-icon">🔍</span>
+            <Search size={16} className="search-icon" />
             <input
               type="text"
               placeholder="Search tasks"
@@ -65,7 +67,7 @@ const TopBar = ({
               className="topbar-icon notification-btn"
               onClick={() => setIsNotificationOpen(!isNotificationOpen)}
             >
-              <span>🔔</span>
+              <Bell size={18} />
               {invitations.length > 0 && (
                 <span className="notification-badge">{invitations.length}</span>
               )}

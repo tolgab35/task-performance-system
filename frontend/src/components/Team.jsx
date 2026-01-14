@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { UserPlus } from "lucide-react";
 import { teamService } from "../services/teamService";
 import { useAuth } from "../context/useAuth";
 import InvitationModal from "./InvitationModal";
@@ -101,7 +102,8 @@ const Team = ({ activeProject }) => {
             className="btn-primary"
             onClick={() => setIsInviteModalOpen(true)}
           >
-            + Üye Ekle
+            <UserPlus size={16} />
+            <span>Üye Ekle</span>
           </button>
         )}
       </div>

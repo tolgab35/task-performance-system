@@ -1,4 +1,5 @@
 import React from "react";
+import { Check, X } from "lucide-react";
 import "../styles/NotificationPanel.css";
 import invitationService from "../services/invitationService";
 
@@ -63,7 +64,11 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
                     disabled={processing[invitation._id]}
                     title="Accept"
                   >
-                    {processing[invitation._id] === "accepting" ? "..." : "✓"}
+                    {processing[invitation._id] === "accepting" ? (
+                      <span>...</span>
+                    ) : (
+                      <Check size={14} />
+                    )}
                   </button>
                   <button
                     className="btn-reject"
@@ -71,7 +76,11 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
                     disabled={processing[invitation._id]}
                     title="Reject"
                   >
-                    {processing[invitation._id] === "rejecting" ? "..." : "✕"}
+                    {processing[invitation._id] === "rejecting" ? (
+                      <span>...</span>
+                    ) : (
+                      <X size={14} />
+                    )}
                   </button>
                 </div>
               </div>

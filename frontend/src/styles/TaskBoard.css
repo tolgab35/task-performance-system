@@ -48,19 +48,19 @@
 }
 
 .avatar-1 {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #6554C0;
 }
 
 .avatar-2 {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: #FF5630;
 }
 
 .avatar-3 {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: #00B8D9;
 }
 
 .avatar-4 {
-  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  background: #36B37E;
 }
 
 .btn-secondary,
@@ -85,12 +85,12 @@
 }
 
 .btn-primary {
-  background: #667eea;
+  background: #0052CC;
   color: white;
 }
 
 .btn-primary:hover {
-  background: #5568d3;
+  background: #0747A6;
 }
 
 .board-tabs {
@@ -120,8 +120,8 @@
 }
 
 .tab-active {
-  color: #667eea;
-  border-bottom-color: #667eea;
+  color: #0052CC;
+  border-bottom-color: #0052CC;
   font-weight: 600;
 }
 
@@ -197,9 +197,9 @@
 }
 
 .add-task-btn:hover {
-  border-color: #667eea;
-  color: #667eea;
-  background: #eef2ff;
+  border-color: #0052CC;
+  color: #0052CC;
+  background: #DEEBFF;
 }
 
 @media (max-width: 1200px) {

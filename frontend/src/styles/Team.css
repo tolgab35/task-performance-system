@@ -1,6 +1,6 @@
 .team-page {
   padding: 32px;
-  background: #f9fafb;
+  background: #fafbfc;
   min-height: 100vh;
 }
 
@@ -8,101 +8,101 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .team-header h1 {
-  font-size: 32px;
-  font-weight: 700;
-  color: #111827;
-  margin: 0 0 8px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #172B4D;
+  margin: 0 0 4px 0;
 }
 
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
+  gap: 16px;
 }
 
 .team-card {
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 32px 24px;
+  border: 1px solid #DFE1E6;
+  border-radius: 3px;
+  padding: 24px 20px;
   text-align: center;
   position: relative;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
 }
 
 .team-card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  transform: translateY(-4px);
+  box-shadow: 0 1px 3px rgba(23, 43, 77, 0.1);
+  border-color: #C1C7D0;
 }
 
 .member-status {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 12px;
+  right: 12px;
 }
 
 .status-indicator {
-  width: 12px;
-  height: 12px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   display: inline-block;
   border: 2px solid white;
 }
 
 .status-indicator.online {
-  background: #10b981;
+  background: #00875A;
 }
 
 .status-indicator.offline {
-  background: #9ca3af;
+  background: #8993A4;
 }
 
 .member-avatar-large {
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #6554C0;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0 auto 16px;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 auto 12px;
 }
 
 .member-name {
-  font-size: 18px;
-  font-weight: 700;
-  color: #111827;
+  font-size: 16px;
+  font-weight: 600;
+  color: #172B4D;
   margin: 0 0 4px 0;
 }
 
 .member-role {
-  font-size: 14px;
-  color: #667eea;
+  font-size: 13px;
+  color: #6554C0;
   font-weight: 500;
-  margin: 0 0 8px 0;
+  margin: 0 0 6px 0;
 }
 
 .member-email {
-  font-size: 13px;
-  color: #6b7280;
-  margin: 0 0 20px 0;
+  font-size: 12px;
+  color: #5E6C84;
+  margin: 0 0 16px 0;
 }
 
 .member-stats {
   display: flex;
   justify-content: center;
   gap: 24px;
-  padding: 20px 0;
-  border-top: 1px solid #f3f4f6;
-  border-bottom: 1px solid #f3f4f6;
-  margin-bottom: 20px;
+  padding: 16px 0;
+  border-top: 1px solid #F4F5F7;
+  border-bottom: 1px solid #F4F5F7;
+  margin-bottom: 16px;
 }
 
 .stat {
@@ -112,15 +112,18 @@
 }
 
 .stat-value {
-  font-size: 24px;
-  font-weight: 700;
-  color: #111827;
+  font-size: 20px;
+  font-weight: 600;
+  color: #172B4D;
+  line-height: 1;
 }
 
 .stat-label {
-  font-size: 12px;
-  color: #6b7280;
+  font-size: 11px;
+  color: #5E6C84;
   margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
 }
 
 .member-actions {
@@ -130,19 +133,18 @@
 
 .btn-outline {
   flex: 1;
-  padding: 10px 16px;
+  padding: 8px 12px;
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  color: #374151;
-  font-size: 14px;
-  font-weight: 600;
+  border: 1px solid #DFE1E6;
+  border-radius: 3px;
+  color: #42526E;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 }
 
 .btn-outline:hover {
-  background: #f9fafb;
-  border-color: #667eea;
-  color: #667eea;
+  background: #F4F5F7;
+  border-color: #C1C7D0;
 }

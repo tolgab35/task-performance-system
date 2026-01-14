@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ClipboardList, Clock, CheckCircle2, Users } from "lucide-react";
 import { dashboardService } from "../services/dashboardService";
 import "../styles/Dashboard.css";
 
@@ -83,8 +84,8 @@ const Dashboard = ({ activeProject }) => {
 
       <div className="stats-grid">
         <div className="stat-card">
-          <div className="stat-icon" style={{ background: "#eef2ff" }}>
-            <span style={{ color: "#667eea" }}>📋</span>
+          <div className="stat-icon stat-icon-blue">
+            <ClipboardList size={20} />
           </div>
           <div className="stat-content">
             <h3 className="stat-value">{stats.totalTasks}</h3>
@@ -93,8 +94,8 @@ const Dashboard = ({ activeProject }) => {
         </div>
 
         <div className="stat-card">
-          <div className="stat-icon" style={{ background: "#fef3c7" }}>
-            <span style={{ color: "#f59e0b" }}>⏳</span>
+          <div className="stat-icon stat-icon-orange">
+            <Clock size={20} />
           </div>
           <div className="stat-content">
             <h3 className="stat-value">{stats.inProgressTasks}</h3>
@@ -103,8 +104,8 @@ const Dashboard = ({ activeProject }) => {
         </div>
 
         <div className="stat-card">
-          <div className="stat-icon" style={{ background: "#d1fae5" }}>
-            <span style={{ color: "#10b981" }}>✓</span>
+          <div className="stat-icon stat-icon-green">
+            <CheckCircle2 size={20} />
           </div>
           <div className="stat-content">
             <h3 className="stat-value">{stats.completedTasks}</h3>
@@ -113,8 +114,8 @@ const Dashboard = ({ activeProject }) => {
         </div>
 
         <div className="stat-card">
-          <div className="stat-icon" style={{ background: "#fee2e2" }}>
-            <span style={{ color: "#ef4444" }}>👥</span>
+          <div className="stat-icon stat-icon-purple">
+            <Users size={20} />
           </div>
           <div className="stat-content">
             <h3 className="stat-value">{stats.teamMembers}</h3>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { X } from "lucide-react";
 import { projectService } from "../services/projectService";
 import "../styles/Modal.css";
 
@@ -53,7 +54,7 @@ const ProjectCreateModal = ({ isOpen, onClose, onProjectCreated }) => {
             onClick={handleClose}
             disabled={loading}
           >
-            ✕
+            <X size={18} />
           </button>
         </div>
 

@@ -6,9 +6,9 @@
   width: 360px;
   max-height: 480px;
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid #DFE1E6;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px rgba(9, 30, 66, 0.15);
   z-index: 1000;
   overflow: hidden;
 }
@@ -17,27 +17,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
-  border-bottom: 1px solid #e5e7eb;
-  background: #f9fafb;
+  padding: 12px 16px;
+  border-bottom: 1px solid #DFE1E6;
+  background: #F4F5F7;
 }
 
 .notification-header h3 {
   margin: 0;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
-  color: #111827;
+  color: #172B4D;
 }
 
 .notification-close {
   background: none;
   border: none;
-  font-size: 24px;
-  color: #6b7280;
+  font-size: 20px;
+  color: #5E6C84;
   cursor: pointer;
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,7 +45,7 @@
 }
 
 .notification-close:hover {
-  color: #111827;
+  color: #172B4D;
 }
 
 .notification-content {
@@ -54,14 +54,14 @@
 }
 
 .no-invitations {
-  padding: 40px 20px;
+  padding: 32px 20px;
   text-align: center;
-  color: #6b7280;
+  color: #5E6C84;
 }
 
 .no-invitations p {
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .invitation-list {
@@ -72,17 +72,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  margin-bottom: 8px;
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  transition: all 0.2s;
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  background: #FAFBFC;
+  border: 1px solid #DFE1E6;
+  border-radius: 3px;
+  transition: all 0.1s;
 }
 
 .invitation-card:hover {
-  background: #f3f4f6;
-  border-color: #d1d5db;
+  background: #F4F5F7;
+  border-color: #C1C7D0;
 }
 
 .invitation-card:last-child {
@@ -94,10 +94,64 @@
 }
 
 .invitation-project {
-  margin: 0 0 4px 0;
-  font-size: 14px;
+  margin: 0 0 2px 0;
+  font-size: 13px;
   font-weight: 600;
-  color: #111827;
+  color: #172B4D;
+}
+
+.invitation-from {
+  margin: 0;
+  font-size: 12px;
+  color: #5E6C84;
+}
+
+.invitation-from strong {
+  color: #42526E;
+  font-weight: 500;
+}
+
+.invitation-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-accept,
+.btn-reject {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s;
+}
+
+.btn-accept {
+  background: #E3FCEF;
+  color: #00875A;
+}
+
+.btn-accept:hover:not(:disabled) {
+  background: #ABF5D1;
+}
+
+.btn-reject {
+  background: #FFEBE6;
+  color: #DE350B;
+}
+
+.btn-reject:hover:not(:disabled) {
+  background: #FFBDAD;
+}
+
+.btn-accept:disabled,
+.btn-reject:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 }
 
 .invitation-from {
