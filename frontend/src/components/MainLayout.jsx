@@ -56,18 +56,17 @@ function MainLayout() {
     setActiveProject(newProject);
   };
 
-  const handleInvitationProcessed = (action, result) => {
+  const handleInvitationProcessed = (action, invitation, project = null) => {
     // Remove invitation from list
-    setInvitations((prev) => prev.filter((inv) => inv._id !== result._id));
+    setInvitations((prev) => prev.filter((inv) => inv._id !== invitation._id));
 
     // If accepted, add project to userProjects and set as active
-    if (action === "accepted" && result.project) {
-      const newProject = result.project;
+    if (action === "accepted" && project) {
       setUserProjects((prev) => {
-        const exists = prev.some((p) => p._id === newProject._id);
-        return exists ? prev : [...prev, newProject];
+        const exists = prev.some((p) => p._id === project._id);
+        return exists ? prev : [...prev, project];
       });
-      setActiveProject(newProject);
+      setActiveProject(project);
     }
   };
 

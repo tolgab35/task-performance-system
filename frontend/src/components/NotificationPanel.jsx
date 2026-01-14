@@ -9,7 +9,7 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
     setProcessing({ ...processing, [invitationId]: "accepting" });
     try {
       const result = await invitationService.acceptInvitation(invitationId);
-      onInvitationProcessed("accepted", result);
+      onInvitationProcessed("accepted", result.invitation, result.project);
     } catch (error) {
       console.error("Error accepting invitation:", error);
       alert(error.response?.data?.message || "Failed to accept invitation");
@@ -20,8 +20,8 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
   const handleReject = async (invitationId) => {
     setProcessing({ ...processing, [invitationId]: "rejecting" });
     try {
-      await invitationService.rejectInvitation(invitationId);
-      onInvitationProcessed("rejected", { _id: invitationId });
+      const result = await invitationService.rejectInvitation(invitationId);
+      onInvitationProcessed("rejected", result.invitation);
     } catch (error) {
       console.error("Error rejecting invitation:", error);
       alert(error.response?.data?.message || "Failed to reject invitation");
