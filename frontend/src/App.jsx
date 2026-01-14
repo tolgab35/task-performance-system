@@ -1,36 +1,27 @@
-import { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import TopBar from "./components/TopBar";
-import Dashboard from "./components/Dashboard";
-import TaskBoard from "./components/TaskBoard";
-import Team from "./components/Team";
-import Reports from "./components/Reports";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import ProtectedRoute from "./components/ProtectedRoute";
+import MainLayout from "./components/MainLayout";
 import "./App.css";
 
 function App() {
-  const [activePage, setActivePage] = useState("tasks");
-
-  const renderPage = () => {
-    switch (activePage) {
-      case "dashboard":
-        return <Dashboard />;
-      case "tasks":
-        return <TaskBoard />;
-      case "team":
-        return <Team />;
-      case "reports":
-        return <Reports />;
-      default:
-        return <TaskBoard />;
-    }
-  };
-
   return (
-    <div className="app">
-      <Sidebar activePage={activePage} setActivePage={setActivePage} />
-      <TopBar />
-      <main className="main-content">{renderPage()}</main>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/*"
+          element={
+            <ProtectedRoute>
+              <MainLayout />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
