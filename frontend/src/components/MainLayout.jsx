@@ -52,7 +52,10 @@ function MainLayout() {
               element={<Dashboard activeProject={activeProject} />}
             />
             <Route path="/tasks" element={<TaskBoard />} />
-            <Route path="/team" element={<Team />} />
+            <Route 
+              path="/team" 
+              element={<Team activeProject={activeProject} />} 
+            />
             <Route path="/reports" element={<Reports />} />
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
           </Routes>
