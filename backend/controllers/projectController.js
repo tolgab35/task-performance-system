@@ -3,12 +3,13 @@ const Task = require("../models/Task");
 const User = require("../models/User");
 
 /**
- * Tüm Projeleri Listele
+ * Tüm Projeleri Listele (Kullanıcının üyesi olduğu projeler)
  * GET /api/projects
  */
 exports.getAllProjects = async (req, res) => {
   try {
-    const projects = await Project.find()
+    // Sadece kullanıcının üyesi olduğu projeleri getir
+    const projects = await Project.find({ members: req.user._id })
       .populate("createdBy", "name email")
       .populate("members", "name email role");
 
