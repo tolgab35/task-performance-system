@@ -1,12 +1,23 @@
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "../styles/Sidebar.css";
 
-const Sidebar = ({ activePage, setActivePage }) => {
+const Sidebar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user, logout } = useAuth();
+
   const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: "📊" },
-    { id: "tasks", label: "Tasks", icon: "📋" },
-    { id: "team", label: "Team", icon: "👥" },
-    { id: "reports", label: "Reports", icon: "📈" },
+    { id: "dashboard", label: "Dashboard", icon: "📊", path: "/dashboard" },
+    { id: "tasks", label: "Tasks", icon: "📋", path: "/tasks" },
+    { id: "team", label: "Team", icon: "👥", path: "/team" },
+    { id: "reports", label: "Reports", icon: "📈", path: "/reports" },
   ];
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <div className="sidebar">
@@ -21,8 +32,8 @@ const Sidebar = ({ activePage, setActivePage }) => {
         {menuItems.map((item) => (
           <button
             key={item.id}
-            className={`nav-item ${activePage === item.id ? "active" : ""}`}
-            onClick={() => setActivePage(item.id)}
+            className={`nav-item ${location.pathname === item.path ? "active" : ""}`}
+            onClick={() => navigate(item.path)}
           >
             <span className="nav-icon">{item.icon}</span>
             <span className="nav-label">{item.label}</span>
@@ -32,12 +43,15 @@ const Sidebar = ({ activePage, setActivePage }) => {
 
       <div className="sidebar-footer">
         <div className="user-profile">
-          <div className="user-avatar">DV</div>
+          <div className="user-avatar">{user?.name?.substring(0, 2).toUpperCase() || "U"}</div>
           <div className="user-info">
-            <div className="user-name">Demo User</div>
-            <div className="user-email">demo@taskflow.com</div>
+            <div className="user-name">{user?.name || "User"}</div>
+            <div className="user-email">{user?.email || ""}</div>
           </div>
         </div>
+        <button className="logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     </div>
   );
