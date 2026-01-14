@@ -13,7 +13,7 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
       onInvitationProcessed("accepted", result.invitation, result.project);
     } catch (error) {
       console.error("Error accepting invitation:", error);
-      alert(error.response?.data?.message || "Failed to accept invitation");
+      alert(error.response?.data?.message || "Davet kabul edilemedi");
       setProcessing({ ...processing, [invitationId]: null });
     }
   };
@@ -25,7 +25,7 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
       onInvitationProcessed("rejected", result.invitation);
     } catch (error) {
       console.error("Error rejecting invitation:", error);
-      alert(error.response?.data?.message || "Failed to reject invitation");
+      alert(error.response?.data?.message || "Davet reddedilemedi");
       setProcessing({ ...processing, [invitationId]: null });
     }
   };
@@ -33,7 +33,7 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
   return (
     <div className="notification-panel">
       <div className="notification-header">
-        <h3>Invitations</h3>
+        <h3>Davetler</h3>
         <button className="notification-close" onClick={onClose}>
           &times;
         </button>
@@ -42,7 +42,7 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
       <div className="notification-content">
         {invitations.length === 0 ? (
           <div className="no-invitations">
-            <p>No pending invitations</p>
+            <p>Bekleyen davet yok</p>
           </div>
         ) : (
           <div className="invitation-list">
@@ -50,11 +50,10 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
               <div key={invitation._id} className="invitation-card">
                 <div className="invitation-info">
                   <p className="invitation-project">
-                    {invitation.projectId?.name || "Project"}
+                    {invitation.projectId?.name || "Proje"}
                   </p>
                   <p className="invitation-from">
-                    from{" "}
-                    <strong>{invitation.invitedBy?.name || "Unknown"}</strong>
+                    <strong>{invitation.invitedBy?.name || "Bilinmeyen"}</strong> tarafından
                   </p>
                 </div>
                 <div className="invitation-actions">
@@ -62,7 +61,7 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
                     className="btn-accept"
                     onClick={() => handleAccept(invitation._id)}
                     disabled={processing[invitation._id]}
-                    title="Accept"
+                    title="Kabul Et"
                   >
                     {processing[invitation._id] === "accepting" ? (
                       <span>...</span>
@@ -74,7 +73,7 @@ const NotificationPanel = ({ invitations, onClose, onInvitationProcessed }) => {
                     className="btn-reject"
                     onClick={() => handleReject(invitation._id)}
                     disabled={processing[invitation._id]}
-                    title="Reject"
+                    title="Reddet"
                   >
                     {processing[invitation._id] === "rejecting" ? (
                       <span>...</span>

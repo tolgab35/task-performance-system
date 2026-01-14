@@ -54,7 +54,7 @@ const TopBar = ({
             <Search size={16} className="search-icon" />
             <input
               type="text"
-              placeholder="Search tasks"
+              placeholder="Görev ara"
               className="search-input"
             />
             <span className="search-shortcut">⌘ K</span>

@@ -30,10 +30,10 @@ function Register() {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <h1>Register</h1>
+        <h1>Kayıt Ol</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Name</label>
+            <label>Ad Soyad</label>
             <input
               type="text"
               value={name}
@@ -43,7 +43,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
-            <label>Email</label>
+            <label>E-posta</label>
             <input
               type="email"
               value={email}
@@ -53,7 +53,7 @@ function Register() {
             />
           </div>
           <div className="form-group">
-            <label>Password</label>
+            <label>Şifre</label>
             <input
               type="password"
               value={password}
@@ -64,11 +64,11 @@ function Register() {
           </div>
           {error && <div className="error-message">{error}</div>}
           <button type="submit" disabled={loading}>
-            {loading ? "Loading..." : "Register"}
+            {loading ? "Yükleniyor..." : "Kayıt Ol"}
           </button>
         </form>
         <p className="auth-link">
-          Already have an account? <Link to="/login">Login</Link>
+          Zaten hesabınız var mı? <Link to="/login">Giriş Yapın</Link>
         </p>
       </div>
     </div>

@@ -133,8 +133,8 @@ const Team = ({ activeProject }) => {
               </div>
 
               <div className="member-actions">
-                <button className="btn-outline">Profil</button>
-                <button className="btn-outline">Mesaj</button>
+                <button className="btn-outline">Profil Görüntüle</button>
+                <button className="btn-outline">Mesaj Gönder</button>
               </div>
             </div>
           ))}

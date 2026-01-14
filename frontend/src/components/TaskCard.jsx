@@ -48,10 +48,10 @@ const TaskCard = ({ task, onStatusChange }) => {
       <div className="task-header">
         <div className="task-badges">
           <span className={`task-priority priority-${task.priority?.toLowerCase() || 'medium'}`}>
-            {task.priority || 'Medium'}
+            {task.priority === 'Low' ? 'Düşük' : task.priority === 'Medium' ? 'Orta' : task.priority === 'High' ? 'Yüksek' : 'Orta'}
           </span>
           <span className={`task-category category-${task.category?.toLowerCase() || 'development'}`}>
-            {task.category || 'Development'}
+            {task.category === 'Ideation' ? 'Fikir' : task.category === 'Design' ? 'Tasarım' : task.category === 'Research' ? 'Araştırma' : task.category === 'Development' ? 'Geliştirme' : 'Geliştirme'}
           </span>
         </div>
         <select
@@ -60,9 +60,9 @@ const TaskCard = ({ task, onStatusChange }) => {
           onChange={handleStatusChange}
           disabled={isChangingStatus}
         >
-          <option value="To Do">To Do</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Done">Done</option>
+          <option value="To Do">Yapılacak</option>
+          <option value="In Progress">Devam Ediyor</option>
+          <option value="Done">Tamamlandı</option>
         </select>
       </div>
 

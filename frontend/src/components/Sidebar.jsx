@@ -9,10 +9,10 @@ const Sidebar = () => {
   const { user, logout } = useAuth();
 
   const menuItems = [
-    { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, path: "/dashboard" },
-    { id: "tasks", label: "Tasks", icon: CheckSquare, path: "/tasks" },
-    { id: "team", label: "Team", icon: Users, path: "/team" },
-    { id: "reports", label: "Reports", icon: BarChart3, path: "/reports" },
+    { id: "dashboard", label: "Ana Sayfa", icon: LayoutDashboard, path: "/dashboard" },
+    { id: "tasks", label: "Görevler", icon: CheckSquare, path: "/tasks" },
+    { id: "team", label: "Takım", icon: Users, path: "/team" },
+    { id: "reports", label: "Raporlar", icon: BarChart3, path: "/reports" },
   ];
 
   const handleLogout = () => {
@@ -59,7 +59,7 @@ const Sidebar = () => {
         </div>
         <button className="logout-btn" onClick={handleLogout}>
           <LogOut size={16} />
-          <span>Logout</span>
+          <span>Çıkış Yap</span>
         </button>
       </div>
     </div>

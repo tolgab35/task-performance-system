@@ -11,14 +11,14 @@ const InvitationModal = ({ isOpen, onClose, projectId, onInvitationSent }) => {
     e.preventDefault();
 
     if (!email.trim()) {
-      setError("Email is required");
+      setError("E-posta adresi gereklidir");
       return;
     }
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setError("Please enter a valid email address");
+      setError("Lütfen geçerli bir e-posta adresi girin");
       return;
     }
 
@@ -33,7 +33,7 @@ const InvitationModal = ({ isOpen, onClose, projectId, onInvitationSent }) => {
         onInvitationSent();
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to send invitation");
+      setError(err.response?.data?.message || "Davet gönderilemedi");
     } finally {
       setLoading(false);
     }
@@ -51,7 +51,7 @@ const InvitationModal = ({ isOpen, onClose, projectId, onInvitationSent }) => {
     <div className="modal-overlay" onClick={handleClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>Invite Team Member</h2>
+          <h2>Takım Üyesi Davet Et</h2>
           <button className="modal-close" onClick={handleClose}>
             &times;
           </button>
@@ -59,13 +59,13 @@ const InvitationModal = ({ isOpen, onClose, projectId, onInvitationSent }) => {
 
         <form onSubmit={handleSubmit} className="modal-form">
           <div className="form-group">
-            <label htmlFor="email">Email Address</label>
+            <label htmlFor="email">E-posta Adresi</label>
             <input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="colleague@company.com"
+              placeholder="ornek@sirket.com"
               disabled={loading}
               autoFocus
             />
@@ -80,10 +80,10 @@ const InvitationModal = ({ isOpen, onClose, projectId, onInvitationSent }) => {
               className="btn-cancel"
               disabled={loading}
             >
-              Cancel
+              İptal
             </button>
             <button type="submit" className="btn-primary" disabled={loading}>
-              {loading ? "Sending..." : "Send Invitation"}
+              {loading ? "Gönderiliyor..." : "Davet Gönder"}
             </button>
           </div>
         </form>

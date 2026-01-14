@@ -63,17 +63,17 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
   const columns = [
     {
       id: "To Do",
-      title: "To Do",
+      title: "Yapılacak",
       count: getTasksByStatus("To Do").length,
     },
     {
       id: "In Progress",
-      title: "In Progress",
+      title: "Devam Ediyor",
       count: getTasksByStatus("In Progress").length,
     },
     {
       id: "Done",
-      title: "Done",
+      title: "Tamamlandı",
       count: getTasksByStatus("Done").length,
     },
   ];
@@ -126,7 +126,7 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
           </div>
           {user && activeProject.createdBy === user.id && (
             <button className="btn-secondary" onClick={onInviteClick}>
-              Invite
+              Davet Et
             </button>
           )}
           <button
@@ -134,16 +134,16 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
             onClick={() => handleAddTask("To Do")}
           >
             <Plus size={16} />
-            <span>Add New Task</span>
+            <span>Yeni Görev Ekle</span>
           </button>
         </div>
       </div>
 
       <div className="board-tabs">
-        <button className="tab">Overview</button>
-        <button className="tab tab-active">Board View</button>
-        <button className="tab">Timeline</button>
-        <button className="tab">Table</button>
+        <button className="tab">Genel Bakış</button>
+        <button className="tab tab-active">Tahta Görünümü</button>
+        <button className="tab">Zaman Çizelgesi</button>
+        <button className="tab">Tablo</button>
       </div>
 
       <div className="board-columns">
@@ -171,7 +171,7 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
               className="add-task-btn"
               onClick={() => handleAddTask(column.id)}
             >
-              + Add New
+              + Yeni Ekle
             </button>
           </div>
         ))}

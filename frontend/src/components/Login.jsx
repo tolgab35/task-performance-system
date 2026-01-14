@@ -29,10 +29,10 @@ function Login() {
   return (
     <div className="auth-container">
       <div className="auth-box">
-        <h1>Login</h1>
+        <h1>Giriş Yap</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Email</label>
+            <label>E-posta</label>
             <input
               type="email"
               value={email}
@@ -42,7 +42,7 @@ function Login() {
             />
           </div>
           <div className="form-group">
-            <label>Password</label>
+            <label>Şifre</label>
             <input
               type="password"
               value={password}
@@ -53,11 +53,11 @@ function Login() {
           </div>
           {error && <div className="error-message">{error}</div>}
           <button type="submit" disabled={loading}>
-            {loading ? "Loading..." : "Login"}
+            {loading ? "Yükleniyor..." : "Giriş Yap"}
           </button>
         </form>
         <p className="auth-link">
-          Don't have an account? <Link to="/register">Register</Link>
+          Hesabınız yok mu? <Link to="/register">Kayıt Olun</Link>
         </p>
       </div>
     </div>
