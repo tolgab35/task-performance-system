@@ -15,7 +15,38 @@
 
 .topbar-left {
   flex: 1;
-  max-width: 400px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.project-tabs {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.project-tab {
+  padding: 6px 12px;
+  border: none;
+  background: #f3f4f6;
+  color: #6b7280;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.project-tab:hover {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.project-tab.active {
+  background: #667eea;
+  color: white;
 }
 
 .search-container {
