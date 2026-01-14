@@ -34,6 +34,13 @@ function MainLayout() {
     fetchUserProjects();
   }, []);
 
+  const handleProjectCreated = async (newProject) => {
+    // Yeni projeyi listeye ekle
+    setUserProjects((prev) => [...prev, newProject]);
+    // Yeni projeyi aktif yap
+    setActiveProject(newProject);
+  };
+
   return (
     <div className="app">
       <Sidebar />
@@ -41,6 +48,7 @@ function MainLayout() {
         userProjects={userProjects}
         activeProject={activeProject}
         onProjectChange={setActiveProject}
+        onProjectCreated={handleProjectCreated}
       />
       <main className="main-content">
         {loading ? (
