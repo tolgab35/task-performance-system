@@ -1,6 +1,6 @@
 .task-board {
-  padding: 32px;
-  background: #f9fafb;
+  padding: 24px;
+  background: #FAFBFC;
   min-height: 100vh;
 }
 
@@ -8,14 +8,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .board-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #111827;
+  font-size: 24px;
+  font-weight: 600;
+  color: #172B4D;
   margin: 0;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #5E6C84;
+  margin: 4px 0 0 0;
 }
 
 .board-actions {
@@ -65,23 +71,26 @@
 
 .btn-secondary,
 .btn-primary {
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 6px 12px;
+  border-radius: 3px;
   border: none;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .btn-secondary {
   background: white;
-  color: #374151;
-  border: 1px solid #e5e7eb;
+  color: #42526E;
+  border: 1px solid #DFE1E6;
 }
 
 .btn-secondary:hover {
-  background: #f9fafb;
+  background: #F4F5F7;
 }
 
 .btn-primary {
@@ -95,28 +104,28 @@
 
 .board-tabs {
   display: flex;
-  gap: 8px;
-  margin-bottom: 32px;
-  border-bottom: 1px solid #e5e7eb;
+  gap: 6px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #DFE1E6;
   padding-bottom: 0;
 }
 
 .tab {
-  padding: 12px 20px;
+  padding: 8px 12px;
   background: none;
   border: none;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  color: #6b7280;
+  color: #5E6C84;
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
   position: relative;
   bottom: -1px;
 }
 
 .tab:hover {
-  color: #111827;
+  color: #172B4D;
 }
 
 .tab-active {
@@ -128,13 +137,13 @@
 .board-columns {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 16px;
 }
 
 .board-column {
-  background: #f3f4f6;
-  border-radius: 12px;
-  padding: 16px;
+  background: #F4F5F7;
+  border-radius: 3px;
+  padding: 12px;
   min-height: 500px;
 }
 
@@ -142,62 +151,66 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .column-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #111827;
+  font-size: 14px;
+  font-weight: 600;
+  color: #172B4D;
   margin: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .column-count {
   background: white;
-  color: #6b7280;
-  font-size: 12px;
+  color: #5E6C84;
+  font-size: 11px;
   font-weight: 600;
-  padding: 2px 8px;
-  border-radius: 12px;
+  padding: 2px 6px;
+  border-radius: 10px;
 }
 
 .column-menu {
   background: none;
   border: none;
-  font-size: 20px;
-  color: #6b7280;
+  font-size: 18px;
+  color: #5E6C84;
   cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: background 0.2s ease;
+  padding: 4px;
+  border-radius: 3px;
+  transition: all 0.1s;
 }
 
 .column-menu:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: #EBECF0;
+  color: #172B4D;
 }
 
 .column-tasks {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .add-task-btn {
   width: 100%;
-  padding: 12px;
+  padding: 8px;
   background: white;
-  border: 2px dashed #d1d5db;
-  border-radius: 8px;
-  color: #6b7280;
-  font-size: 14px;
-  font-weight: 600;
+  border: 1px dashed #C1C7D0;
+  border-radius: 3px;
+  color: #5E6C84;
+  font-size: 13px;
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.1s ease;
 }
 
 .add-task-btn:hover {
   border-color: #0052CC;
+  color: #0052CC;
+  background: #DEEBFF;
+}
   color: #0052CC;
   background: #DEEBFF;
 }
