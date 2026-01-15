@@ -96,6 +96,16 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
     }
   };
 
+  const handleDeleteTask = async (taskId) => {
+    try {
+      await taskService.deleteTask(taskId);
+      setTasks(tasks.filter((t) => t._id !== taskId));
+    } catch (err) {
+      console.error("Task silme hatası:", err);
+      throw err;
+    }
+  };
+
   const handleDragStart = (event) => {
     const { active } = event;
     const task = tasks.find((t) => t._id === active.id);
@@ -366,13 +376,19 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
               tasks={getTasksByStatus(column.id)}
               onAddTask={handleAddTask}
               onStatusChange={handleStatusChange}
+              onDeleteTask={handleDeleteTask}
             />
           ))}
         </div>
 
         <DragOverlay>
           {activeTask ? (
-            <TaskCard task={activeTask} onStatusChange={() => {}} isDragging />
+            <TaskCard
+              task={activeTask}
+              onStatusChange={() => {}}
+              onDelete={() => {}}
+              isDragging
+            />
           ) : null}
         </DragOverlay>
       </DndContext>
@@ -392,7 +408,13 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
 };
 
 // Droppable Column Component
-function DroppableColumn({ column, tasks, onAddTask, onStatusChange }) {
+function DroppableColumn({
+  column,
+  tasks,
+  onAddTask,
+  onStatusChange,
+  onDeleteTask,
+}) {
   const { setNodeRef, isOver } = useDroppable({
     id: column.id,
   });
@@ -420,6 +442,7 @@ function DroppableColumn({ column, tasks, onAddTask, onStatusChange }) {
               key={task._id}
               task={task}
               onStatusChange={onStatusChange}
+              onDeleteTask={onDeleteTask}
             />
           ))}
         </div>
@@ -433,7 +456,7 @@ function DroppableColumn({ column, tasks, onAddTask, onStatusChange }) {
 }
 
 // Sortable Task Card Wrapper
-function SortableTaskCard({ task, onStatusChange }) {
+function SortableTaskCard({ task, onStatusChange, onDeleteTask }) {
   const {
     attributes,
     listeners,
@@ -455,7 +478,11 @@ function SortableTaskCard({ task, onStatusChange }) {
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <TaskCard task={task} onStatusChange={onStatusChange} />
+      <TaskCard
+        task={task}
+        onStatusChange={onStatusChange}
+        onDelete={onDeleteTask}
+      />
     </div>
   );
 }

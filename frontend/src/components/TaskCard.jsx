@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { Trash2 } from "lucide-react";
 import "../styles/TaskCard.css";
 
-const TaskCard = ({ task, onStatusChange, isDragging = false }) => {
+const TaskCard = ({ task, onStatusChange, onDelete, isDragging = false }) => {
   const [isChangingStatus, setIsChangingStatus] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // Workflow kuralları: İzin verilen geçişler
   const allowedTransitions = {
@@ -28,14 +30,18 @@ const TaskCard = ({ task, onStatusChange, isDragging = false }) => {
 
   const formatDate = (dateString) => {
     if (!dateString) return "Tarih yok";
-    
+
     const date = new Date(dateString);
     const now = new Date();
-    
+
     // Gün başlangıçlarına göre hesapla
-    const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const dateOnly = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    );
     const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    
+
     const diffTime = nowOnly.getTime() - dateOnly.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
@@ -68,8 +74,33 @@ const TaskCard = ({ task, onStatusChange, isDragging = false }) => {
     }
   };
 
+  const handleDelete = async (e) => {
+    e.stopPropagation();
+
+    if (
+      !window.confirm(
+        `"${task.title}" görevini silmek istediğinize emin misiniz?`
+      )
+    ) {
+      return;
+    }
+
+    setIsDeleting(true);
+    try {
+      await onDelete(task._id);
+    } catch (error) {
+      console.error("Task silme hatası:", error);
+      alert("Task silinirken bir hata oluştu");
+      setIsDeleting(false);
+    }
+  };
+
   return (
-    <div className={`task-card ${isDragging ? "dragging" : ""}`}>
+    <div
+      className={`task-card ${isDragging ? "dragging" : ""} ${
+        isDeleting ? "deleting" : ""
+      }`}
+    >
       <div className="task-header">
         <div className="task-badges">
           <span
@@ -100,6 +131,14 @@ const TaskCard = ({ task, onStatusChange, isDragging = false }) => {
               ? "Geliştirme"
               : "Geliştirme"}
           </span>
+          <button
+            className="task-delete-btn"
+            onClick={handleDelete}
+            disabled={isDeleting}
+            title="Görevi sil"
+          >
+            <Trash2 size={14} />
+          </button>
         </div>
         <select
           className="task-status-select"

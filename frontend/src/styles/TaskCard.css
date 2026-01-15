@@ -18,9 +18,49 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+.task-card.deleting {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .task-card:hover {
   box-shadow: 0 1px 3px rgba(23, 43, 77, 0.1);
   border-color: #C1C7D0;
+}
+
+.task-card:hover .task-delete-btn {
+  opacity: 1;
+}
+
+.task-delete-btn {
+  background: white;
+  border: 1px solid #DFE1E6;
+  border-radius: 3px;
+  padding: 4px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5E6C84;
+  margin-left: 6px;
+}
+
+.task-delete-btn:hover {
+  background: #FFEBE6;
+  border-color: #FF5630;
+  color: #DE350B;
+  transform: scale(1.1);
+}
+
+.task-delete-btn:active {
+  transform: scale(0.95);
+}
+
+.task-delete-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }
 
 .task-header {
