@@ -324,17 +324,51 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
     );
   }
 
+  // Takım üyelerinin avatarlarını oluştur
+  const getInitials = (name) => {
+    if (!name) return "?";
+    const parts = name.trim().split(" ");
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
+  const renderTeamAvatars = () => {
+    if (!activeProject.members || activeProject.members.length === 0) {
+      return null;
+    }
+
+    const maxVisible = 4;
+    const visibleMembers = activeProject.members.slice(0, maxVisible);
+    const remainingCount = activeProject.members.length - maxVisible;
+
+    return (
+      <div className="team-avatars">
+        {visibleMembers.map((member, index) => (
+          <div
+            key={member._id}
+            className={`avatar avatar-${(index % 4) + 1}`}
+            title={member.name}
+          >
+            {getInitials(member.name)}
+          </div>
+        ))}
+        {remainingCount > 0 && (
+          <div className="avatar avatar-4" title={`${remainingCount} kişi daha`}>
+            +{remainingCount}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="task-board">
       <div className="board-header">
         <h1 className="board-title">{activeProject.name}</h1>
         <div className="board-actions">
-          <div className="team-avatars">
-            <div className="avatar avatar-1">AY</div>
-            <div className="avatar avatar-2">AD</div>
-            <div className="avatar avatar-3">MK</div>
-            <div className="avatar avatar-4">+5</div>
-          </div>
+          {renderTeamAvatars()}
           {user &&
             activeProject.createdBy &&
             (activeProject.createdBy === user._id ||
