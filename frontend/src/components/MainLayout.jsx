@@ -105,7 +105,10 @@ function MainLayout() {
               path="/team"
               element={<Team activeProject={activeProject} />}
             />
-            <Route path="/reports" element={<Reports />} />
+            <Route
+              path="/reports"
+              element={<Reports activeProject={activeProject} />}
+            />
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
           </Routes>
         )}
