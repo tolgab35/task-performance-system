@@ -54,6 +54,8 @@ Bitirme projesi kapsamında geliştirilen, görev atama, ilerleme takibi, perfor
 
 - Görev oluşturma, düzenleme ve silme
 - Görev durumu takibi (pending, in-progress, completed)
+- Drag & Drop ile görev durumu değiştirme (Kanban Board)
+- Sütunlar arası sürükle-bırak desteği
 - Görev öncelik seviyeleri
 - Görev atama ve takibi
 - Proje bazlı görev filtreleme
@@ -73,9 +75,11 @@ Bitirme projesi kapsamında geliştirilen, görev atama, ilerleme takibi, perfor
 ### Frontend
 
 - **React 19.2.0** - UI kütüphanesi
-- **Vite 7.2.4** - Build tool ve dev server
-- **React Router DOM** - Client-side routing
+- **Vite** - Build tool ve dev server
+- **React Router DOM 7.12.0** - Client-side routing
 - **Axios** - HTTP client
+- **@dnd-kit** - Drag and drop kütüphanesi (Kanban board için)
+- **Lucide React** - Modern icon kütüphanesi
 - **CSS Modules** - Component-scoped styling
 - **Context API** - State management
 
@@ -364,6 +368,32 @@ Kullanıcıları listele (Requires Auth)
 
 Kullanıcı detaylarını getir (Requires Auth)
 
+### Report Endpoints
+
+#### GET /api/reports/project/:projectId
+
+Proje bazlı rapor getir (Requires Auth)
+
+```json
+Response:
+{
+  "success": true,
+  "data": {
+    "project": { "_id": "...", "name": "...", "description": "..." },
+    "totalTasks": 10,
+    "completedTasks": 5,
+    "inProgressTasks": 3,
+    "pendingTasks": 2,
+    "completionRate": 50,
+    "memberStats": [...]
+  }
+}
+```
+
+#### GET /api/reports/user/:userId?projectId=xxx
+
+Kullanıcı performans raporu (Requires Auth)
+
 ## 💻 Kullanım
 
 ### 1. Kayıt ve Giriş
@@ -434,9 +464,11 @@ task-performance-system/
 │   │   ├── assets/              # Görseller ve static kaynaklar
 │   │   ├── components/
 │   │   │   ├── Dashboard.jsx    # Dashboard sayfası
-│   │   │   ├── TaskBoard.jsx    # Görev tahtası
+│   │   │   ├── TaskBoard.jsx    # Görev tahtası (Drag & Drop)
+│   │   │   ├── TaskCard.jsx     # Görev kartı component
 │   │   │   ├── Team.jsx         # Takım sayfası
 │   │   │   ├── Reports.jsx      # Raporlar sayfası
+│   │   │   ├── Landing.jsx      # Açılış/Ana sayfa
 │   │   │   ├── Login.jsx        # Giriş sayfası
 │   │   │   ├── Register.jsx     # Kayıt sayfası
 │   │   │   ├── Sidebar.jsx      # Yan menü
@@ -444,8 +476,10 @@ task-performance-system/
 │   │   │   ├── MainLayout.jsx   # Ana layout
 │   │   │   ├── ProtectedRoute.jsx # Route guard
 │   │   │   ├── ProjectCreateModal.jsx # Proje oluşturma modal
+│   │   │   ├── TaskCreateModal.jsx # Görev oluşturma modal
 │   │   │   ├── InvitationModal.jsx # Davet gönderme modal
-│   │   │   └── NotificationPanel.jsx # Bildirim paneli
+│   │   │   ├── NotificationPanel.jsx # Bildirim paneli
+│   │   │   └── Toast.jsx        # Bildirim toast component
 │   │   ├── context/
 │   │   │   ├── AuthProvider.jsx # Auth context
 │   │   │   └── useAuth.js       # Auth hook
