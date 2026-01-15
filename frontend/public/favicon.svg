@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="45" fill="url(#grad)"/>
+  
+  <!-- Checkmark -->
+  <path d="M 30 50 L 42 62 L 70 34" 
+        stroke="white" 
+        stroke-width="8" 
+        stroke-linecap="round" 
+        stroke-linejoin="round" 
+        fill="none"/>
+  
+  <!-- Small squares (task items) -->
+  <rect x="22" y="20" width="8" height="8" fill="white" opacity="0.7" rx="2"/>
+  <rect x="22" y="44" width="8" height="8" fill="white" opacity="0.7" rx="2"/>
+  <rect x="22" y="68" width="8" height="8" fill="white" opacity="0.7" rx="2"/>
+</svg>
