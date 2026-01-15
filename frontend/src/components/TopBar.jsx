@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Plus, Search, Bell } from "lucide-react";
 import ProjectCreateModal from "./ProjectCreateModal";
 import NotificationPanel from "./NotificationPanel";
+import { useAuth } from "../context/useAuth";
 import "../styles/TopBar.css";
 
 const TopBar = ({
@@ -14,6 +15,7 @@ const TopBar = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const { user } = useAuth();
 
   const handleCreateProject = () => {
     setIsModalOpen(true);
@@ -86,7 +88,9 @@ const TopBar = ({
           </div>
 
           <button className="topbar-profile">
-            <div className="profile-avatar">DV</div>
+            <div className="profile-avatar">
+              {user?.name?.substring(0, 2).toUpperCase() || "U"}
+            </div>
           </button>
         </div>
       </div>
