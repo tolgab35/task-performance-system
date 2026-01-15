@@ -131,28 +131,24 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
 
     if (!activeTask) return;
 
-    // Eğer over bir task ise (aynı veya farklı kolonda)
+    // Önizleme için geçici status değişikliği yap
+    // handleDragEnd'de gerçek değişiklik ve backend güncellemesi yapılacak
+
+    // Eğer over bir task ise
     if (overTask) {
       const activeStatus = activeTask.status;
       const overStatus = overTask.status;
 
-      // Farklı kolonlar arası taşıma
       if (activeStatus !== overStatus) {
-        // Workflow kontrolü - izin verilmeyen geçişte UI güncellemesi yapma
-        if (!isTransitionAllowed(activeStatus, overStatus)) {
-          return;
-        }
-
+        // Farklı kolonlar arası - sadece önizleme için status değiştir
         setTasks((tasks) => {
           const activeIndex = tasks.findIndex((t) => t._id === activeId);
           const overIndex = tasks.findIndex((t) => t._id === overId);
 
-          // Aktif task'in status'unu değiştir
           const updatedTasks = tasks.map((task) =>
             task._id === activeId ? { ...task, status: overStatus } : task
           );
 
-          // Yeni sıraya göre arrange et
           return arrayMove(updatedTasks, activeIndex, overIndex);
         });
       } else {
@@ -160,20 +156,14 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
         setTasks((tasks) => {
           const oldIndex = tasks.findIndex((t) => t._id === activeId);
           const newIndex = tasks.findIndex((t) => t._id === overId);
-
           return arrayMove(tasks, oldIndex, newIndex);
         });
       }
     } else if (["To Do", "In Progress", "Done"].includes(overId)) {
-      // Kolon header'ına veya boş alana bırakma
+      // Kolon header'ına veya boş alana sürükleme - önizleme için status değiştir
       const activeStatus = activeTask.status;
 
       if (activeStatus !== overId) {
-        // Workflow kontrolü - izin verilmeyen geçişte UI güncellemesi yapma
-        if (!isTransitionAllowed(activeStatus, overId)) {
-          return;
-        }
-
         setTasks((tasks) =>
           tasks.map((task) =>
             task._id === activeId ? { ...task, status: overId } : task
@@ -189,7 +179,7 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
     setActiveTask(null);
 
     if (!over) {
-      // Bırakma iptal edildi, orijinal duruma döndür
+      // Bırakılmadı - orijinal duruma döndür
       if (originalStatus) {
         setTasks((tasks) =>
           tasks.map((t) =>
@@ -215,7 +205,8 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
       if (oldStatus !== newStatus) {
         // Workflow kontrolü
         if (!isTransitionAllowed(oldStatus, newStatus)) {
-          // İzin verilmeyen geçiş, orijinal duruma döndür
+          alert("Bu geçiş yapılamaz! Lütfen workflow kurallarına uyun.");
+          // Orijinal duruma geri döndür
           setTasks((tasks) =>
             tasks.map((t) =>
               t._id === taskId ? { ...t, status: oldStatus } : t
@@ -224,6 +215,7 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
           return;
         }
 
+        // UI zaten handleDragOver'da güncellenmişti, şimdi backend'e gönder
         try {
           const updatedTask = await taskService.updateTaskStatus(
             taskId,
@@ -247,16 +239,6 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
   };
 
   const handleDragCancel = () => {
-    // İptal edildiğinde orijinal duruma döndür
-    if (activeTask && activeTask._originalStatus) {
-      setTasks((tasks) =>
-        tasks.map((t) =>
-          t._id === activeTask._id
-            ? { ...t, status: activeTask._originalStatus }
-            : t
-        )
-      );
-    }
     setActiveTask(null);
   };
 
@@ -355,7 +337,10 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
           </div>
         ))}
         {remainingCount > 0 && (
-          <div className="avatar avatar-4" title={`${remainingCount} kişi daha`}>
+          <div
+            className="avatar avatar-4"
+            title={`${remainingCount} kişi daha`}
+          >
             +{remainingCount}
           </div>
         )}
