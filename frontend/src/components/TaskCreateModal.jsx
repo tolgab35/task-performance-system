@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import { X, ChevronDown, User, AlertCircle, Zap } from "lucide-react";
 import { taskService } from "../services/taskService";
 import { teamService } from "../services/teamService";
 import "../styles/Modal.css";
@@ -13,6 +13,7 @@ const TaskCreateModal = ({ isOpen, onClose, projectId, onTaskCreated }) => {
   const [teamMembers, setTeamMembers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   useEffect(() => {
     const fetchTeamMembers = async () => {
@@ -73,8 +74,40 @@ const TaskCreateModal = ({ isOpen, onClose, projectId, onTaskCreated }) => {
       setPriority("Medium");
       setCategory("Development");
       setError("");
+      setOpenDropdown(null);
       onClose();
     }
+  };
+
+  const priorityOptions = [
+    { value: "Low", label: "Düşük", color: "#36B37E" },
+    { value: "Medium", label: "Orta", color: "#FF991F" },
+    { value: "High", label: "Yüksek", color: "#DE350B" },
+  ];
+
+  const categoryOptions = [
+    { value: "Ideation", label: "Fikir", icon: "💡" },
+    { value: "Design", label: "Tasarım", icon: "🎨" },
+    { value: "Research", label: "Araştırma", icon: "🔍" },
+    { value: "Development", label: "Geliştirme", icon: "⚙️" },
+  ];
+
+  const getAssignedUserName = () => {
+    if (!assignedUser) return "Atanmamış";
+    const member = teamMembers.find((m) => m.id === assignedUser);
+    return member?.name || "Atanmamış";
+  };
+
+  const getPriorityLabel = () => {
+    return priorityOptions.find((p) => p.value === priority)?.label || priority;
+  };
+
+  const getCategoryLabel = () => {
+    return categoryOptions.find((c) => c.value === category)?.label || category;
+  };
+
+  const toggleDropdown = (dropdown) => {
+    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
   };
 
   if (!isOpen) return null;
@@ -123,48 +156,137 @@ const TaskCreateModal = ({ isOpen, onClose, projectId, onTaskCreated }) => {
 
           <div className="form-group">
             <label htmlFor="assignedUser">Atanacak Kişi (Opsiyonel)</label>
-            <select
-              id="assignedUser"
-              value={assignedUser}
-              onChange={(e) => setAssignedUser(e.target.value)}
-              disabled={loading}
-            >
-              <option value="">Atanmamış</option>
-              {teamMembers.map((member) => (
-                <option key={member.id} value={member.id}>
-                  {member.name}
-                </option>
-              ))}
-            </select>
+            <div className="custom-select">
+              <button
+                type="button"
+                className="select-button"
+                onClick={() => toggleDropdown("assignedUser")}
+                disabled={loading}
+              >
+                <div className="select-value">
+                  <User size={16} />
+                  <span>{getAssignedUserName()}</span>
+                </div>
+                <ChevronDown
+                  size={16}
+                  className={openDropdown === "assignedUser" ? "rotate" : ""}
+                />
+              </button>
+              {openDropdown === "assignedUser" && (
+                <div className="select-dropdown">
+                  <div
+                    className="select-option"
+                    onClick={() => {
+                      setAssignedUser("");
+                      setOpenDropdown(null);
+                    }}
+                  >
+                    <User size={16} />
+                    <span>Atanmamış</span>
+                  </div>
+                  {teamMembers.map((member) => (
+                    <div
+                      key={member.id}
+                      className={`select-option ${
+                        assignedUser === member.id ? "selected" : ""
+                      }`}
+                      onClick={() => {
+                        setAssignedUser(member.id);
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      <div className="member-avatar-small">
+                        {member.name.substring(0, 2).toUpperCase()}
+                      </div>
+                      <span>{member.name}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="form-group">
             <label htmlFor="priority">Aciliyet *</label>
-            <select
-              id="priority"
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-              disabled={loading}
-            >
-              <option value="Low">Düşük</option>
-              <option value="Medium">Orta</option>
-              <option value="High">Yüksek</option>
-            </select>
+            <div className="custom-select">
+              <button
+                type="button"
+                className="select-button"
+                onClick={() => toggleDropdown("priority")}
+                disabled={loading}
+              >
+                <div className="select-value">
+                  <Zap size={16} />
+                  <span>{getPriorityLabel()}</span>
+                </div>
+                <ChevronDown
+                  size={16}
+                  className={openDropdown === "priority" ? "rotate" : ""}
+                />
+              </button>
+              {openDropdown === "priority" && (
+                <div className="select-dropdown">
+                  {priorityOptions.map((option) => (
+                    <div
+                      key={option.value}
+                      className={`select-option ${
+                        priority === option.value ? "selected" : ""
+                      }`}
+                      onClick={() => {
+                        setPriority(option.value);
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      <div
+                        className="priority-dot"
+                        style={{ backgroundColor: option.color }}
+                      />
+                      <span>{option.label}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="form-group">
             <label htmlFor="category">Task Türü *</label>
-            <select
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              disabled={loading}
-            >
-              <option value="Ideation">Fikir</option>
-              <option value="Design">Tasarım</option>
-              <option value="Research">Araştırma</option>
-              <option value="Development">Geliştirme</option>
-            </select>
+            <div className="custom-select">
+              <button
+                type="button"
+                className="select-button"
+                onClick={() => toggleDropdown("category")}
+                disabled={loading}
+              >
+                <div className="select-value">
+                  <AlertCircle size={16} />
+                  <span>{getCategoryLabel()}</span>
+                </div>
+                <ChevronDown
+                  size={16}
+                  className={openDropdown === "category" ? "rotate" : ""}
+                />
+              </button>
+              {openDropdown === "category" && (
+                <div className="select-dropdown">
+                  {categoryOptions.map((option) => (
+                    <div
+                      key={option.value}
+                      className={`select-option ${
+                        category === option.value ? "selected" : ""
+                      }`}
+                      onClick={() => {
+                        setCategory(option.value);
+                        setOpenDropdown(null);
+                      }}
+                    >
+                      <span className="category-icon">{option.icon}</span>
+                      <span>{option.label}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="modal-actions">
