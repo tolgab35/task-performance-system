@@ -44,7 +44,6 @@
   align-items: center;
   justify-content: center;
   color: #5E6C84;
-  margin-left: 6px;
 }
 
 .task-delete-btn:hover {
@@ -124,27 +123,7 @@
   color: #42526E;
 }
 
-.task-status-select {
-  padding: 3px 6px;
-  border: 1px solid #DFE1E6;
-  border-radius: 3px;
-  font-size: 11px;
-  font-weight: 500;
-  color: #5E6C84;
-  background: #F4F5F7;
-  cursor: pointer;
-  transition: all 0.1s;
-}
 
-.task-status-select:hover {
-  background: #EBECF0;
-  border-color: #C1C7D0;
-}
-
-.task-status-select:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 
 .task-title {
   font-size: 14px;

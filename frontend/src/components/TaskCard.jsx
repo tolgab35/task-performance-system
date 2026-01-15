@@ -3,21 +3,7 @@ import { Trash2 } from "lucide-react";
 import "../styles/TaskCard.css";
 
 const TaskCard = ({ task, onStatusChange, onDelete, isDragging = false }) => {
-  const [isChangingStatus, setIsChangingStatus] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
-  // Workflow kuralları: İzin verilen geçişler
-  const allowedTransitions = {
-    "To Do": ["In Progress"],
-    "In Progress": ["Done"],
-    Done: [], // Done'dan başka duruma geçilemez
-  };
-
-  const getAvailableStatuses = () => {
-    const current = task.status;
-    const allowed = allowedTransitions[current] || [];
-    return [current, ...allowed];
-  };
 
   const getInitials = (name) => {
     if (!name) return "?";
@@ -58,20 +44,6 @@ const TaskCard = ({ task, onStatusChange, onDelete, isDragging = false }) => {
       month: "short",
       year: diffDays > 365 ? "numeric" : undefined,
     });
-  };
-
-  const handleStatusChange = async (e) => {
-    const newStatus = e.target.value;
-    if (newStatus === task.status) return;
-
-    setIsChangingStatus(true);
-    try {
-      await onStatusChange(task._id, newStatus);
-    } catch (error) {
-      console.error("Status değiştirme hatası:", error);
-    } finally {
-      setIsChangingStatus(false);
-    }
   };
 
   const handleDelete = async (e) => {
@@ -131,31 +103,15 @@ const TaskCard = ({ task, onStatusChange, onDelete, isDragging = false }) => {
               ? "Geliştirme"
               : "Geliştirme"}
           </span>
-          <button
-            className="task-delete-btn"
-            onClick={handleDelete}
-            disabled={isDeleting}
-            title="Görevi sil"
-          >
-            <Trash2 size={14} />
-          </button>
         </div>
-        <select
-          className="task-status-select"
-          value={task.status}
-          onChange={handleStatusChange}
-          disabled={isChangingStatus || task.status === "Done"}
+        <button
+          className="task-delete-btn"
+          onClick={handleDelete}
+          disabled={isDeleting}
+          title="Görevi sil"
         >
-          {getAvailableStatuses().includes("To Do") && (
-            <option value="To Do">Yapılacak</option>
-          )}
-          {getAvailableStatuses().includes("In Progress") && (
-            <option value="In Progress">Devam Ediyor</option>
-          )}
-          {getAvailableStatuses().includes("Done") && (
-            <option value="Done">Tamamlandı</option>
-          )}
-        </select>
+          <Trash2 size={14} />
+        </button>
       </div>
 
       <h3 className="task-title">{task.title}</h3>
