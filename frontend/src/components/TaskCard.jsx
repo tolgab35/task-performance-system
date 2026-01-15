@@ -27,18 +27,30 @@ const TaskCard = ({ task, onStatusChange, isDragging = false }) => {
   };
 
   const formatDate = (dateString) => {
+    if (!dateString) return "Tarih yok";
+    
     const date = new Date(dateString);
     const now = new Date();
-    const diffTime = Math.abs(now - date);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    // Gün başlangıçlarına göre hesapla
+    const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const nowOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
+    const diffTime = nowOnly.getTime() - dateOnly.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
     if (diffDays === 0) return "Bugün";
     if (diffDays === 1) return "Dün";
-    if (diffDays < 7) return `${diffDays} gün önce`;
+    if (diffDays > 1 && diffDays < 7) return `${diffDays} gün önce`;
+    if (diffDays >= 7 && diffDays < 30) {
+      const weeks = Math.floor(diffDays / 7);
+      return weeks === 1 ? "1 hafta önce" : `${weeks} hafta önce`;
+    }
 
     return date.toLocaleDateString("tr-TR", {
       day: "numeric",
       month: "short",
+      year: diffDays > 365 ? "numeric" : undefined,
     });
   };
 
