@@ -17,6 +17,7 @@ import {
 } from "@dnd-kit/sortable";
 import TaskCard from "./TaskCard";
 import TaskCreateModal from "./TaskCreateModal";
+import Toast from "./Toast";
 import { taskService } from "../services/taskService";
 import { useAuth } from "../context/useAuth";
 import "../styles/TaskBoard.css";
@@ -29,6 +30,7 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedColumn, setSelectedColumn] = useState(null);
   const [activeTask, setActiveTask] = useState(null);
+  const [toast, setToast] = useState(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -205,7 +207,10 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
       if (oldStatus !== newStatus) {
         // Workflow kontrolü
         if (!isTransitionAllowed(oldStatus, newStatus)) {
-          alert("Bu geçiş yapılamaz! Lütfen workflow kurallarına uyun.");
+          setToast({
+            message: "Bu geçiş yapılamaz! Lütfen workflow kurallarına uyun.",
+            type: "error",
+          });
           // Orijinal duruma geri döndür
           setTasks((tasks) =>
             tasks.map((t) =>
@@ -232,7 +237,10 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
               t._id === taskId ? { ...t, status: oldStatus } : t
             )
           );
-          alert(err.response?.data?.message || "Status güncellenemedi");
+          setToast({
+            message: err.response?.data?.message || "Status güncellenemedi",
+            type: "error",
+          });
         }
       }
     }
@@ -422,6 +430,14 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
         initialStatus={selectedColumn}
         onTaskCreated={handleTaskCreated}
       />
+
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 };
