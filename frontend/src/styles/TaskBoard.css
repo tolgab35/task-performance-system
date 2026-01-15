@@ -145,6 +145,12 @@
   border-radius: 3px;
   padding: 12px;
   min-height: 500px;
+  transition: all 0.2s ease;
+}
+
+.board-column.drag-over {
+  background: #E3F2FD;
+  box-shadow: 0 0 0 2px #2196F3;
 }
 
 .column-header {
@@ -191,6 +197,14 @@
 
 .column-tasks {
   margin-bottom: 8px;
+  min-height: 100px;
+  transition: all 0.2s ease;
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.board-column.drag-over .column-tasks {
+  background: rgba(33, 150, 243, 0.1);
 }
 
 .add-task-btn {

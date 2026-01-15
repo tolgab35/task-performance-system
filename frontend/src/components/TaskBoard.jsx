@@ -1,5 +1,20 @@
 import { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
+import {
+  DndContext,
+  DragOverlay,
+  closestCorners,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  useDroppable,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  useSortable,
+  arrayMove,
+} from "@dnd-kit/sortable";
 import TaskCard from "./TaskCard";
 import TaskCreateModal from "./TaskCreateModal";
 import { taskService } from "../services/taskService";
@@ -13,6 +28,15 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedColumn, setSelectedColumn] = useState(null);
+  const [activeTask, setActiveTask] = useState(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -40,13 +64,190 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
     return tasks.filter((task) => task.status === status);
   };
 
+  // Workflow kuralları: İzin verilen geçişler
+  const allowedTransitions = {
+    "To Do": ["In Progress"],
+    "In Progress": ["Done"],
+    Done: [], // Done'dan başka duruma geçilemez
+  };
+
+  const isTransitionAllowed = (fromStatus, toStatus) => {
+    if (fromStatus === toStatus) return true; // Aynı kolon içinde sıralama her zaman ok
+    return allowedTransitions[fromStatus]?.includes(toStatus) || false;
+  };
+
   const handleStatusChange = async (taskId, newStatus) => {
+    const task = tasks.find((t) => t._id === taskId);
+    if (!task) return;
+
+    // Workflow kontrolü
+    if (!isTransitionAllowed(task.status, newStatus)) {
+      alert(
+        `"${task.status}" durumundan "${newStatus}" durumuna geçiş yapılamaz.`
+      );
+      return;
+    }
+
     try {
       const updatedTask = await taskService.updateTaskStatus(taskId, newStatus);
       setTasks(tasks.map((t) => (t._id === taskId ? updatedTask : t)));
     } catch (err) {
       alert(err.response?.data?.message || "Status güncellenemedi");
     }
+  };
+
+  const handleDragStart = (event) => {
+    const { active } = event;
+    const task = tasks.find((t) => t._id === active.id);
+    setActiveTask(task);
+    // Sürükleme başladığındaki orijinal status'u kaydet
+    if (task) {
+      task._originalStatus = task.status;
+    }
+  };
+
+  const handleDragOver = (event) => {
+    const { active, over } = event;
+
+    if (!over) return;
+
+    const activeId = active.id;
+    const overId = over.id;
+
+    if (activeId === overId) return;
+
+    const activeTask = tasks.find((t) => t._id === activeId);
+    const overTask = tasks.find((t) => t._id === overId);
+
+    if (!activeTask) return;
+
+    // Eğer over bir task ise (aynı veya farklı kolonda)
+    if (overTask) {
+      const activeStatus = activeTask.status;
+      const overStatus = overTask.status;
+
+      // Farklı kolonlar arası taşıma
+      if (activeStatus !== overStatus) {
+        // Workflow kontrolü - izin verilmeyen geçişte UI güncellemesi yapma
+        if (!isTransitionAllowed(activeStatus, overStatus)) {
+          return;
+        }
+
+        setTasks((tasks) => {
+          const activeIndex = tasks.findIndex((t) => t._id === activeId);
+          const overIndex = tasks.findIndex((t) => t._id === overId);
+
+          // Aktif task'in status'unu değiştir
+          const updatedTasks = tasks.map((task) =>
+            task._id === activeId ? { ...task, status: overStatus } : task
+          );
+
+          // Yeni sıraya göre arrange et
+          return arrayMove(updatedTasks, activeIndex, overIndex);
+        });
+      } else {
+        // Aynı kolon içinde sıralama
+        setTasks((tasks) => {
+          const oldIndex = tasks.findIndex((t) => t._id === activeId);
+          const newIndex = tasks.findIndex((t) => t._id === overId);
+
+          return arrayMove(tasks, oldIndex, newIndex);
+        });
+      }
+    } else if (["To Do", "In Progress", "Done"].includes(overId)) {
+      // Kolon header'ına veya boş alana bırakma
+      const activeStatus = activeTask.status;
+
+      if (activeStatus !== overId) {
+        // Workflow kontrolü - izin verilmeyen geçişte UI güncellemesi yapma
+        if (!isTransitionAllowed(activeStatus, overId)) {
+          return;
+        }
+
+        setTasks((tasks) =>
+          tasks.map((task) =>
+            task._id === activeId ? { ...task, status: overId } : task
+          )
+        );
+      }
+    }
+  };
+
+  const handleDragEnd = async (event) => {
+    const { active, over } = event;
+    const originalStatus = activeTask?._originalStatus || activeTask?.status;
+    setActiveTask(null);
+
+    if (!over) {
+      // Bırakma iptal edildi, orijinal duruma döndür
+      if (originalStatus) {
+        setTasks((tasks) =>
+          tasks.map((t) =>
+            t._id === active.id ? { ...t, status: originalStatus } : t
+          )
+        );
+      }
+      return;
+    }
+
+    const taskId = active.id;
+    const task = tasks.find((t) => t._id === taskId);
+
+    if (!task) return;
+
+    const overTask = tasks.find((t) => t._id === over.id);
+    const newStatus = overTask ? overTask.status : over.id;
+
+    // Status değişikliği varsa backend'e gönder
+    if (["To Do", "In Progress", "Done"].includes(newStatus)) {
+      const oldStatus = originalStatus || task.status;
+
+      if (oldStatus !== newStatus) {
+        // Workflow kontrolü
+        if (!isTransitionAllowed(oldStatus, newStatus)) {
+          // İzin verilmeyen geçiş, orijinal duruma döndür
+          setTasks((tasks) =>
+            tasks.map((t) =>
+              t._id === taskId ? { ...t, status: oldStatus } : t
+            )
+          );
+          return;
+        }
+
+        try {
+          const updatedTask = await taskService.updateTaskStatus(
+            taskId,
+            newStatus
+          );
+          // Backend'den gelen güncel task ile güncelle
+          setTasks((tasks) =>
+            tasks.map((t) => (t._id === taskId ? updatedTask : t))
+          );
+        } catch (err) {
+          // Hata durumunda orijinal duruma geri al
+          setTasks((tasks) =>
+            tasks.map((t) =>
+              t._id === taskId ? { ...t, status: oldStatus } : t
+            )
+          );
+          alert(err.response?.data?.message || "Status güncellenemedi");
+        }
+      }
+    }
+  };
+
+  const handleDragCancel = () => {
+    // İptal edildiğinde orijinal duruma döndür
+    if (activeTask && activeTask._originalStatus) {
+      setTasks((tasks) =>
+        tasks.map((t) =>
+          t._id === activeTask._id
+            ? { ...t, status: activeTask._originalStatus }
+            : t
+        )
+      );
+    }
+    setActiveTask(null);
   };
 
   const handleAddTask = (status) => {
@@ -124,13 +325,14 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
             <div className="avatar avatar-3">MK</div>
             <div className="avatar avatar-4">+5</div>
           </div>
-          {user && activeProject.createdBy && 
-           (activeProject.createdBy === user._id || 
-            activeProject.createdBy._id === user._id) && (
-            <button className="btn-secondary" onClick={onInviteClick}>
-              Davet Et
-            </button>
-          )}
+          {user &&
+            activeProject.createdBy &&
+            (activeProject.createdBy === user._id ||
+              activeProject.createdBy._id === user._id) && (
+              <button className="btn-secondary" onClick={onInviteClick}>
+                Davet Et
+              </button>
+            )}
           <button
             className="btn-primary"
             onClick={() => handleAddTask("To Do")}
@@ -148,36 +350,32 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
         <button className="tab">Tablo</button>
       </div>
 
-      <div className="board-columns">
-        {columns.map((column) => (
-          <div key={column.id} className="board-column">
-            <div className="column-header">
-              <h2 className="column-title">
-                {column.title}
-                <span className="column-count">{column.count}</span>
-              </h2>
-              <button className="column-menu">⋯</button>
-            </div>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCorners}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+        onDragCancel={handleDragCancel}
+      >
+        <div className="board-columns">
+          {columns.map((column) => (
+            <DroppableColumn
+              key={column.id}
+              column={column}
+              tasks={getTasksByStatus(column.id)}
+              onAddTask={handleAddTask}
+              onStatusChange={handleStatusChange}
+            />
+          ))}
+        </div>
 
-            <div className="column-tasks">
-              {getTasksByStatus(column.id).map((task) => (
-                <TaskCard
-                  key={task._id}
-                  task={task}
-                  onStatusChange={handleStatusChange}
-                />
-              ))}
-            </div>
-
-            <button
-              className="add-task-btn"
-              onClick={() => handleAddTask(column.id)}
-            >
-              + Yeni Ekle
-            </button>
-          </div>
-        ))}
-      </div>
+        <DragOverlay>
+          {activeTask ? (
+            <TaskCard task={activeTask} onStatusChange={() => {}} isDragging />
+          ) : null}
+        </DragOverlay>
+      </DndContext>
 
       <TaskCreateModal
         isOpen={isModalOpen}
@@ -192,5 +390,74 @@ const TaskBoard = ({ activeProject, onInviteClick }) => {
     </div>
   );
 };
+
+// Droppable Column Component
+function DroppableColumn({ column, tasks, onAddTask, onStatusChange }) {
+  const { setNodeRef, isOver } = useDroppable({
+    id: column.id,
+  });
+
+  return (
+    <div
+      ref={setNodeRef}
+      className={`board-column ${isOver ? "drag-over" : ""}`}
+    >
+      <div className="column-header">
+        <h2 className="column-title">
+          {column.title}
+          <span className="column-count">{column.count}</span>
+        </h2>
+        <button className="column-menu">⋯</button>
+      </div>
+
+      <SortableContext
+        items={tasks.map((t) => t._id)}
+        strategy={verticalListSortingStrategy}
+      >
+        <div className="column-tasks">
+          {tasks.map((task) => (
+            <SortableTaskCard
+              key={task._id}
+              task={task}
+              onStatusChange={onStatusChange}
+            />
+          ))}
+        </div>
+      </SortableContext>
+
+      <button className="add-task-btn" onClick={() => onAddTask(column.id)}>
+        + Yeni Ekle
+      </button>
+    </div>
+  );
+}
+
+// Sortable Task Card Wrapper
+function SortableTaskCard({ task, onStatusChange }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: task._id,
+  });
+
+  const style = {
+    transform: transform
+      ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
+      : undefined,
+    transition,
+    opacity: isDragging ? 0.5 : 1,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+      <TaskCard task={task} onStatusChange={onStatusChange} />
+    </div>
+  );
+}
 
 export default TaskBoard;

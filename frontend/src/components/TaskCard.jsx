@@ -1,8 +1,21 @@
 import { useState } from "react";
 import "../styles/TaskCard.css";
 
-const TaskCard = ({ task, onStatusChange }) => {
+const TaskCard = ({ task, onStatusChange, isDragging = false }) => {
   const [isChangingStatus, setIsChangingStatus] = useState(false);
+
+  // Workflow kuralları: İzin verilen geçişler
+  const allowedTransitions = {
+    "To Do": ["In Progress"],
+    "In Progress": ["Done"],
+    Done: [], // Done'dan başka duruma geçilemez
+  };
+
+  const getAvailableStatuses = () => {
+    const current = task.status;
+    const allowed = allowedTransitions[current] || [];
+    return [current, ...allowed];
+  };
 
   const getInitials = (name) => {
     if (!name) return "?";
@@ -44,25 +57,53 @@ const TaskCard = ({ task, onStatusChange }) => {
   };
 
   return (
-    <div className="task-card">
+    <div className={`task-card ${isDragging ? "dragging" : ""}`}>
       <div className="task-header">
         <div className="task-badges">
-          <span className={`task-priority priority-${task.priority?.toLowerCase() || 'medium'}`}>
-            {task.priority === 'Low' ? 'Düşük' : task.priority === 'Medium' ? 'Orta' : task.priority === 'High' ? 'Yüksek' : 'Orta'}
+          <span
+            className={`task-priority priority-${
+              task.priority?.toLowerCase() || "medium"
+            }`}
+          >
+            {task.priority === "Low"
+              ? "Düşük"
+              : task.priority === "Medium"
+              ? "Orta"
+              : task.priority === "High"
+              ? "Yüksek"
+              : "Orta"}
           </span>
-          <span className={`task-category category-${task.category?.toLowerCase() || 'development'}`}>
-            {task.category === 'Ideation' ? 'Fikir' : task.category === 'Design' ? 'Tasarım' : task.category === 'Research' ? 'Araştırma' : task.category === 'Development' ? 'Geliştirme' : 'Geliştirme'}
+          <span
+            className={`task-category category-${
+              task.category?.toLowerCase() || "development"
+            }`}
+          >
+            {task.category === "Ideation"
+              ? "Fikir"
+              : task.category === "Design"
+              ? "Tasarım"
+              : task.category === "Research"
+              ? "Araştırma"
+              : task.category === "Development"
+              ? "Geliştirme"
+              : "Geliştirme"}
           </span>
         </div>
         <select
           className="task-status-select"
           value={task.status}
           onChange={handleStatusChange}
-          disabled={isChangingStatus}
+          disabled={isChangingStatus || task.status === "Done"}
         >
-          <option value="To Do">Yapılacak</option>
-          <option value="In Progress">Devam Ediyor</option>
-          <option value="Done">Tamamlandı</option>
+          {getAvailableStatuses().includes("To Do") && (
+            <option value="To Do">Yapılacak</option>
+          )}
+          {getAvailableStatuses().includes("In Progress") && (
+            <option value="In Progress">Devam Ediyor</option>
+          )}
+          {getAvailableStatuses().includes("Done") && (
+            <option value="Done">Tamamlandı</option>
+          )}
         </select>
       </div>
 
@@ -74,9 +115,7 @@ const TaskCard = ({ task, onStatusChange }) => {
       <div className="task-footer">
         <div className="task-assignee">
           <div className="assignee-avatar">
-            {task.assignedUser
-              ? getInitials(task.assignedUser.name)
-              : "?"}
+            {task.assignedUser ? getInitials(task.assignedUser.name) : "?"}
           </div>
           <span className="assignee-name">
             {task.assignedUser?.name || "Atanmamış"}
