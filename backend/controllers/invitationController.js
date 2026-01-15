@@ -116,6 +116,13 @@ exports.acceptInvitation = async (req, res) => {
       await project.save();
     }
 
+    // Add project to user's projects array
+    const user = await User.findById(req.user._id);
+    if (user && !user.projects.includes(project._id)) {
+      user.projects.push(project._id);
+      await user.save();
+    }
+
     await invitation.populate("projectId", "name");
     await invitation.populate("invitedBy", "name email");
 
